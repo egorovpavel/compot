@@ -5,9 +5,6 @@
     "keywords": ["php", "microframework"],
     "homepage": "http://github.com/egorovpavel/pvc",
     "license": "MIT",
-    "require": {
-        "symfony/http-foundation": "v2.*"
-    },
     "authors": [
         {
             "name": "Pavel Egorov",
@@ -15,9 +12,9 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0"
+        "php": ">=5.3.0"
     },
     "autoload": {
-        "psr-0": {"egorovpavel/pvc": "PVC"}
+        "psr-0": {"PVC": "PVC/"}
     }
 }
