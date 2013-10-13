@@ -3,7 +3,7 @@
     "type": "library",
     "description": "php microframework",
     "keywords": ["php", "microframework"],
-    "homepage": "https://github.com/egorovpavel/pvc",
+    "homepage": "http://github.com/egorovpavel/pvc",
     "license": "MIT",
     "require": {
         "symfony/http-foundation": "v2.*"
