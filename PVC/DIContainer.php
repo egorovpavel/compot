@@ -67,7 +67,7 @@ class DIContainer
      */
     protected function getBound(\ReflectionClass $class)
     {
-        $bind = $this->bindings[$class->getName()];
+        $bind = isset($this->bindings[$class->getName()]) ? $this->bindings[$class->getName()] : null;
         if (!$bind) {
             return $this->create($class->getName());
         }

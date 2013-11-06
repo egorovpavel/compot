@@ -44,7 +44,7 @@ class Router
                 ];
             }
             if (!empty($uri) && preg_match($rule['rule'], $uri, $matches)) {
-                $controller = $matches['controller'] ? : $rule['defaults']['controller'];
+                $controller = isset($matches['controller']) ? $matches['controller'] : $rule['defaults']['controller'];
                 $action = $matches['action'] ? : $rule['defaults']['action'];
 
                 $def = $this->filterArgs($rule['defaults'] ? : []);
