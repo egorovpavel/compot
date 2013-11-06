@@ -13,8 +13,7 @@
 >
     <testsuites>
         <testsuite name="PVC test suite">
-            <directory>./tests/</directory>
-            <directory>./tests/fixtures</directory>
+            <directory>PVC/tests/</directory>
         </testsuite>
     </testsuites>
 
