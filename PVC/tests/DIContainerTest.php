@@ -99,7 +99,7 @@ class DIContainerTest extends \PHPUnit_Framework_TestCase
 
         $obj = $container->create("PVC\\tests\\fixtures\\ResolvableModelHintedDependencyClass");
         $this->assertNotNull($obj);
-        //print_r($obj);
+
         $this->assertTrue($obj instanceof ResolvableModelHintedDependencyClass);
 
         $this->assertEquals($obj->model->prop, "propValue");
