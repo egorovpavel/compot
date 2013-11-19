@@ -13,6 +13,10 @@ namespace PVC;
 use PVC\Converters\DefaultConverter;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class DefaultValueProvider
+ * @package PVC
+ */
 class DefaultValueProvider implements IValueProvider
 {
 
@@ -20,23 +24,30 @@ class DefaultValueProvider implements IValueProvider
      * @var Request
      */
     protected $request;
-
     /**
      * @var IConverter[]
      */
     protected $converters = array();
-
     /**
      * @var IConverter
      */
     protected $defaultConverter;
 
+    /**
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->request = $request;
         $this->defaultConverter = new DefaultConverter();
     }
 
+    /**
+     * @param $prefix
+     * @param $name
+     * @param \ReflectionClass $type
+     * @return mixed|null
+     */
     public function getValue($prefix, $name, \ReflectionClass $type = null)
     {
         if ($type) {
@@ -50,24 +61,33 @@ class DefaultValueProvider implements IValueProvider
     }
 
     /**
-     * @param $type
-     * @return IConverter
+     * @param $prefix
+     * @param $name
+     * @return mixed|null
      */
-    public function getConverterFor($type)
-    {
-        return $this->converters[$type];
-    }
-
-    public function addConverter($type, IConverter $converter)
-    {
-        $this->converters[$type] = $converter;
-    }
-
     protected function getFromPrefix($prefix, $name)
     {
         for ($i = $this->request; $key = array_shift($prefix); $i = $i->get($key)) {
             if (!$i->get($key)) return null;
         }
         return $i instanceof Request ? $i->get($name) : $i[$name] ? : null;
+    }
+
+    /**
+     * @param string $type
+     * @return \PVC\IConverter
+     */
+    public function getConverterFor($type)
+    {
+        return $this->converters[$type];
+    }
+
+    /**
+     * @param $type
+     * @param IConverter $converter
+     */
+    public function addConverter($type, IConverter $converter)
+    {
+        $this->converters[$type] = $converter;
     }
 }

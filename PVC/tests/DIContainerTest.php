@@ -14,12 +14,14 @@ use PVC\DefaultModelBinder;
 use PVC\DefaultValueProvider;
 use PVC\DependencyBinder;
 use PVC\DIContainer;
+use PVC\HttpApplication;
 use PVC\tests\fixtures\CustomTypeClass;
 use PVC\tests\fixtures\NoDependenciesClass;
 use PVC\tests\fixtures\ResolvableDependencyClass;
 use PVC\tests\fixtures\ResolvableModelDependencyClass;
 use PVC\tests\fixtures\ResolvableModelHintedDependencyClass;
 use PVC\tests\fixtures\ResolvableUnboundDependencyClass;
+use PVC\tests\fixtures\TestHttpApplication;
 use Symfony\Component\HttpFoundation\Request;
 
 class DIContainerTest extends \PHPUnit_Framework_TestCase
@@ -123,4 +125,9 @@ class DIContainerTest extends \PHPUnit_Framework_TestCase
         $container->create("PVC\\tests\\fixtures\\UnresolvableNotHintedDependencyClass");
     }
 
+
+    public function testHttpApplication(){
+        $app = new TestHttpApplication();
+        $app->run();
+    }
 }

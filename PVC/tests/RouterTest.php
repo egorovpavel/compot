@@ -11,6 +11,7 @@ namespace tests;
 
 
 use PVC\DIContainer;
+use PVC\Route;
 use PVC\Router;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,33 +20,31 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 
     public function testPreparesValidRegexpRules()
     {
-        $router = new Router(new DIContainer());
-
         // no optional
-        $this->assertEquals("/\\/(?P<controller>[^\/]+)\/(?P<action>[^\/]+)\/(?P<id>[^\/]+)/", $router->prepareRule("{controller}/{action}/{id}", null));
+        $this->assertEquals("/\\/(?P<controller>[^\/]+)\/(?P<action>[^\/]+)\/(?P<id>[^\/]+)/", Route::prepareRule("{controller}/{action}/{id}", null));
         // optional id
-        $this->assertEquals("/\\/(?P<controller>[^\/]+)\/(?P<action>[^\/]+)\/?(?P<id>[^\/]*)?/", $router->prepareRule("{controller}/{action}/{id}", ['id' => "id"]));
+        $this->assertEquals("/\\/(?P<controller>[^\/]+)\/(?P<action>[^\/]+)\/?(?P<id>[^\/]*)?/", Route::prepareRule("{controller}/{action}/{id}", ['id' => "id"]));
         // optional action
-        $this->assertEquals("/\\/(?P<controller>[^\/]+)\/?(?P<action>[^\/]*)?\/?(?P<id>[^\/]*)?/", $router->prepareRule("{controller}/{action}/{id}", ['id' => "id", 'action' => 'action']));
+        $this->assertEquals("/\\/(?P<controller>[^\/]+)\/?(?P<action>[^\/]*)?\/?(?P<id>[^\/]*)?/", Route::prepareRule("{controller}/{action}/{id}", ['id' => "id", 'action' => 'action']));
         // optional controller
-        $this->assertEquals("/\\/?(?P<controller>[^\/]*)?\/?(?P<action>[^\/]*)?\/?(?P<id>[^\/]*)?/", $router->prepareRule("{controller}/{action}/{id}", ['id' => "id", 'action' => 'action', 'controller' => 'controller']));
+        $this->assertEquals("/\\/?(?P<controller>[^\/]*)?\/?(?P<action>[^\/]*)?\/?(?P<id>[^\/]*)?/", Route::prepareRule("{controller}/{action}/{id}", ['id' => "id", 'action' => 'action', 'controller' => 'controller']));
     }
 
     public function testMatchesRouteRulesWithoutDefaultValues()
     {
-        $router = new Router(new DIContainer());
+        $router = new Router();
         $router->mapRoute("test", "{controller}/{action}/{id}");
 
-        $actual = $router->match(Request::create("/SomeController1/test/test_id"));
-        $this->assertEquals("SomeController1", $actual['controller']);
-        $this->assertEquals("test", $actual['action']);
-        $this->assertEquals("test_id", $actual['arguments']['id']);
+        $actual = $router->match("/SomeController1/test/test_id");
+        $this->assertEquals("SomeController1", $actual->getTarget());
+        $this->assertEquals("test", $actual->getAction());
+        $this->assertEquals("test_id", $actual->getArguments()['id']);
 
-        $this->assertNull($router->match(Request::create("/SomeController2/test/")));
-        $this->assertNull($router->match(Request::create("/SomeController3/test")));
-        $this->assertNull($router->match(Request::create("/SomeController4/")));
-        $this->assertNull($router->match(Request::create("/SomeController5")));
-        $this->assertNull($router->match(Request::create("")));
+        $this->assertNull($router->match("/SomeController2/test/"));
+        $this->assertNull($router->match("/SomeController3/test"));
+        $this->assertNull($router->match("/SomeController4/"));
+        $this->assertNull($router->match("/SomeController5"));
+        $this->assertNull($router->match(""));
     }
 
     public function testMatchesRouteRulesWithDefaultArguments()
@@ -57,26 +56,26 @@ class RouterTest extends \PHPUnit_Framework_TestCase
             'someid' => 'default_someid'
         ]);
 
-        $actual = $router->match(Request::create("/SomeController1/test/test_id/test_subid/test_someid"));
-        $this->assertEquals("SomeController1", $actual['controller']);
-        $this->assertEquals("test", $actual['action']);
-        $this->assertEquals("test_id", $actual['arguments']['id']);
-        $this->assertEquals("test_subid", $actual['arguments']['subid']);
-        $this->assertEquals("test_someid", $actual['arguments']['someid']);
+        $actual = $router->match("/SomeController1/test/test_id/test_subid/test_someid");
+        $this->assertEquals("SomeController1", $actual->getTarget());
+        $this->assertEquals("test", $actual->getAction());
+        $this->assertEquals("test_id", $actual->getArguments()['id']);
+        $this->assertEquals("test_subid", $actual->getArguments()['subid']);
+        $this->assertEquals("test_someid", $actual->getArguments()['someid']);
 
-        $actual = $router->match(Request::create("/SomeController2/test/test_id/test_subid"));
-        $this->assertEquals("SomeController2", $actual['controller']);
-        $this->assertEquals("test", $actual['action']);
-        $this->assertEquals("test_id", $actual['arguments']['id']);
-        $this->assertEquals("test_subid", $actual['arguments']['subid']);
-        $this->assertEquals("default_someid", $actual['arguments']['someid']);
+        $actual = $router->match("/SomeController2/test/test_id/test_subid");
+        $this->assertEquals("SomeController2", $actual->getTarget());
+        $this->assertEquals("test", $actual->getAction());
+        $this->assertEquals("test_id", $actual->getArguments()['id']);
+        $this->assertEquals("test_subid", $actual->getArguments()['subid']);
+        $this->assertEquals("default_someid", $actual->getArguments()['someid']);
 
-        $actual = $router->match(Request::create("/SomeController2/test"));
-        $this->assertEquals("SomeController2", $actual['controller']);
-        $this->assertEquals("test", $actual['action']);
-        $this->assertEquals("default_id", $actual['arguments']['id']);
-        $this->assertEquals("default_subid", $actual['arguments']['subid']);
-        $this->assertEquals("default_someid", $actual['arguments']['someid']);
+        $actual = $router->match("/SomeController2/test");
+        $this->assertEquals("SomeController2", $actual->getTarget());
+        $this->assertEquals("test", $actual->getAction());
+        $this->assertEquals("default_id", $actual->getArguments()['id']);
+        $this->assertEquals("default_subid", $actual->getArguments()['subid']);
+        $this->assertEquals("default_someid", $actual->getArguments()['someid']);
 
     }
 
@@ -90,12 +89,12 @@ class RouterTest extends \PHPUnit_Framework_TestCase
             'someid' => 'default_someid'
         ]);
 
-        $actual = $router->match(Request::create("/SomeController1/"));
-        $this->assertEquals("SomeController1", $actual['controller']);
-        $this->assertEquals("default_action", $actual['action']);
-        $this->assertEquals("default_id", $actual['arguments']['id']);
-        $this->assertEquals("default_subid", $actual['arguments']['subid']);
-        $this->assertEquals("default_someid", $actual['arguments']['someid']);
+        $actual = $router->match("/SomeController1/");
+        $this->assertEquals("SomeController1", $actual->getTarget());
+        $this->assertEquals("default_action", $actual->getAction());
+        $this->assertEquals("default_id", $actual->getArguments()['id']);
+        $this->assertEquals("default_subid", $actual->getArguments()['subid']);
+        $this->assertEquals("default_someid", $actual->getArguments()['someid']);
 
     }
 
@@ -110,12 +109,12 @@ class RouterTest extends \PHPUnit_Framework_TestCase
             'someid' => 'default_someid'
         ]);
 
-        $actual = $router->match(Request::create("/fixedPrefix/test_action/test_id/test_subid"));
-        $this->assertEquals("default_controller", $actual['controller']);
-        $this->assertEquals("test_action", $actual['action']);
-        $this->assertEquals("test_id", $actual['arguments']['id']);
-        $this->assertEquals("test_subid", $actual['arguments']['subid']);
-        $this->assertEquals("default_someid", $actual['arguments']['someid']);
+        $actual = $router->match("/fixedPrefix/test_action/test_id/test_subid");
+        $this->assertEquals("default_controller", $actual->getTarget());
+        $this->assertEquals("test_action", $actual->getAction());
+        $this->assertEquals("test_id", $actual->getArguments()['id']);
+        $this->assertEquals("test_subid", $actual->getArguments()['subid']);
+        $this->assertEquals("default_someid", $actual->getArguments()['someid']);
 
         $router = new Router(new DIContainer());
         $router->mapRoute("test", "{controller}/{action}/{id}/{subid}/{someid}", [
@@ -126,12 +125,12 @@ class RouterTest extends \PHPUnit_Framework_TestCase
             'someid' => 'default_someid'
         ]);
 
-        $actual = $router->match(Request::create("/"));
-        $this->assertEquals("default_controller", $actual['controller']);
-        $this->assertEquals("default_action", $actual['action']);
-        $this->assertEquals("default_id", $actual['arguments']['id']);
-        $this->assertEquals("default_subid", $actual['arguments']['subid']);
-        $this->assertEquals("default_someid", $actual['arguments']['someid']);
+        $actual = $router->match("/");
+        $this->assertEquals("default_controller", $actual->getTarget());
+        $this->assertEquals("default_action", $actual->getAction());
+        $this->assertEquals("default_id", $actual->getArguments()['id']);
+        $this->assertEquals("default_subid", $actual->getArguments()['subid']);
+        $this->assertEquals("default_someid", $actual->getArguments()['someid']);
 
     }
 

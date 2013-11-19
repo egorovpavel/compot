@@ -104,7 +104,7 @@ class DIContainer
 
         $constructor = $reflector->getConstructor();
 
-        if ($constructor && $constructor->getParameters()) {
+        if ($constructor && $constructor->getParameters() && !isset($this->bindings[$reflector->getName()])) {
             return $this->getInstance($reflector, $this->resolveDependencies($constructor));
         }
 
