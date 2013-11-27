@@ -15,8 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 class TestController {
 
     public function getIndexAction(Request $request, TestModelHintedClass $model, $id = null){
-        var_dump($model);
-        var_dump($id);
+
         return "ok";
     }
 

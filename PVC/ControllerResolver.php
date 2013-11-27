@@ -68,18 +68,18 @@ class ControllerResolver implements ControllerResolverInterface{
      */
     public function getController(Request $request)
     {
-        $this->matchedRoute = $this->router->match('/' . $request->getPathInfo());
+        $this->matchedRoute = $this->router->match($request->getPathInfo());
 
         if(!$this->matchedRoute){
             return false;
         }
-
 
         try{
             $controllerInstance = $this->container->create($this->path . $this->matchedRoute->getTarget() . 'Controller');
         }catch (\ReflectionException $e){
             return false;
         }
+
         $actionName = strtolower($request->getMethod()) . ucfirst(strtolower($this->matchedRoute->getAction())) . 'Action';
 
         if(!method_exists($controllerInstance, $actionName)){

@@ -60,6 +60,10 @@ class HttpApplication{
         $this->router->mapRoute($name,$rule,$defaults,$acceptNull);
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function run(Request $request = null){
         $this->container->bind($request ?: Request::createFromGlobals());
         $this->container->bind(Response::create());
@@ -70,5 +74,6 @@ class HttpApplication{
 
         $result = $this->kernel->handle($request);
         $result->send();
+        return $result;
     }
 }

@@ -21,13 +21,13 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     public function testPreparesValidRegexpRules()
     {
         // no optional
-        $this->assertEquals("/\\/(?P<controller>[^\/]+)\/(?P<action>[^\/]+)\/(?P<id>[^\/]+)/", Route::prepareRule("{controller}/{action}/{id}", null));
+        $this->assertEquals("/^\\/(?P<controller>[^\/]+)\/(?P<action>[^\/]+)\/(?P<id>[^\/]+)$/", Route::prepareRule("{controller}/{action}/{id}", null));
         // optional id
-        $this->assertEquals("/\\/(?P<controller>[^\/]+)\/(?P<action>[^\/]+)\/?(?P<id>[^\/]*)?/", Route::prepareRule("{controller}/{action}/{id}", ['id' => "id"]));
+        $this->assertEquals("/^\\/(?P<controller>[^\/]+)\/(?P<action>[^\/]+)\/?(?P<id>[^\/]*)?$/", Route::prepareRule("{controller}/{action}/{id}", ['id' => "id"]));
         // optional action
-        $this->assertEquals("/\\/(?P<controller>[^\/]+)\/?(?P<action>[^\/]*)?\/?(?P<id>[^\/]*)?/", Route::prepareRule("{controller}/{action}/{id}", ['id' => "id", 'action' => 'action']));
+        $this->assertEquals("/^\\/(?P<controller>[^\/]+)\/?(?P<action>[^\/]*)?\/?(?P<id>[^\/]*)?$/", Route::prepareRule("{controller}/{action}/{id}", ['id' => "id", 'action' => 'action']));
         // optional controller
-        $this->assertEquals("/\\/?(?P<controller>[^\/]*)?\/?(?P<action>[^\/]*)?\/?(?P<id>[^\/]*)?/", Route::prepareRule("{controller}/{action}/{id}", ['id' => "id", 'action' => 'action', 'controller' => 'controller']));
+        $this->assertEquals("/^\\/?(?P<controller>[^\/]*)?\/?(?P<action>[^\/]*)?\/?(?P<id>[^\/]*)?$/", Route::prepareRule("{controller}/{action}/{id}", ['id' => "id", 'action' => 'action', 'controller' => 'controller']));
     }
 
     public function testMatchesRouteRulesWithoutDefaultValues()
