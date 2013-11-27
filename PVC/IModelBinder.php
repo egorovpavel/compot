@@ -14,5 +14,10 @@ interface IModelBinder
 {
     public function __construct(IValueProvider $valueProvider);
 
+    /**
+     * @return IValueProvider
+     */
+    public function getValueProvider();
+
     public function resolve($prefix, $object);
 }

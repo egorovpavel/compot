@@ -14,9 +14,5 @@ use PVC\HttpApplication;
 
 class TestHttpApplication extends HttpApplication{
 
-    public function initialize()
-    {
-        // TODO: Implement initialize() method.
-    }
 
 }

@@ -82,7 +82,7 @@ class DIContainer
      * @param array $args
      * @return object
      */
-    protected function getInstance(\ReflectionClass $class, &$args = array())
+    protected function getInstance(\ReflectionClass $class, $args = array())
     {
         if (isset($this->bindings[$class->getName()])) {
             return $this->getBound($class, $args);
@@ -141,11 +141,19 @@ class DIContainer
         foreach ($params as &$parameter) {
             if (($reflector = $parameter->getClass())) {
                 $dependencies[] = $this->getBound($reflector) ? : $this->create($reflector->getName());
-            } else {
+            }elseif($this->modelBinder){
+                $dependencies[] = $this->modelBinder->getValueProvider()->getValue([],$parameter->getName());
+            }else {
                 throw new UnResolvableDependency();
             }
         }
 
         return $dependencies;
+    }
+
+    public function resolveDependenciesFor($obj, $methodName){
+        $reflector = new \ReflectionClass($obj);
+        $method = $reflector->getMethod($methodName);
+        return $this->resolveDependencies($method);
     }
 }

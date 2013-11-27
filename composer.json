@@ -12,8 +12,7 @@
         }
     ],
 	"require": {
-        "symfony/http-foundation": ">=2.3,<2.5-dev",
-        "symfony/http-kernel": "v2.3.7"
+        "symfony/http-kernel": "2.5.*@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "~3.7"

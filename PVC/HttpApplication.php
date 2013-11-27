@@ -10,38 +10,65 @@
 namespace PVC;
 
 
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
+use Symfony\Component\HttpKernel\HttpKernel;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-abstract class HttpApplication {
+class HttpApplication{
 
+    /**
+     * @var EventDispatcher
+     */
+    protected $dispatcher;
+    /**
+     * @var HttpKernel
+     */
+    protected $kernel;
     /**
      * @var DIContainer
      */
     protected $container;
 
     /**
-     * @var Context
+     * @var Router
      */
-    protected $context;
+    protected $router;
 
+    /**
+     * @var ControllerResolverInterface
+     */
+    protected $resolver;
 
     public function __construct(){
         $this->container = new DIContainer();
-        $this->container->bind(Request::createFromGlobals());
+        $this->router = new Router();
+        $this->resolver = new ControllerResolver($this->container,$this->router);
+        $view = new ViewListener();
+        $this->dispatcher = new EventDispatcher();
+        $this->dispatcher->addSubscriber($view);
+        $this->kernel = new HttpKernel($this->dispatcher, $this->resolver);
+    }
+
+    public function setControllerPath($path){
+        $this->resolver->setControllerPath($path);
+    }
+
+    public function mapRoute($name, $rule, array $defaults = null, $acceptNull = false){
+        $this->router->mapRoute($name,$rule,$defaults,$acceptNull);
+    }
+
+    public function run(Request $request = null){
+        $this->container->bind($request ?: Request::createFromGlobals());
         $this->container->bind(Response::create());
         $this->container->bindTo("PVC\\IValueProvider",DependencyBinder::to("PVC\\DefaultValueProvider"));
         $this->container->setModelBinder($this->container->create("PVC\\DefaultModelBinder"));
-        $this->router = new Router();
-    }
-
-    public abstract function initialize();
-
-    public function run(){
-        $this->initialize();
         $request = $this->container->create("Symfony\\Component\\HttpFoundation\\Request");
-        $route = $this->router->match($request->getUri());
-        $this->container->bind($route);
-        $this->context = $this->container->create("PVC\\Context");
+
+
+        $result = $this->kernel->handle($request);
+        $result->send();
     }
 }

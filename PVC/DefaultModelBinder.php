@@ -76,4 +76,11 @@ class DefaultModelBinder implements IModelBinder
             $property->setValue($obj, $this->valueProvider->getValue($prefix, $property->getName()));
         }
     }
+
+    /**
+     * @return IValueProvider
+     */
+    public function getValueProvider(){
+        return $this->valueProvider;
+    }
 }

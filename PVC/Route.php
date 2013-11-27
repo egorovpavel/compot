@@ -61,7 +61,7 @@ class Route
             return preg_replace_callback('/{([^}]*)}/', $convertToRegexp, $rule);
         };
 
-        return "/\/" . str_replace("/", "\\/", $convertToRegexp($rule)) . "/";
+        return "/^\/" . str_replace("/", "\\/", $convertToRegexp($rule)) . "$/";
     }
 
     /**
