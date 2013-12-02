@@ -42,14 +42,19 @@ class HttpApplication{
      */
     protected $resolver;
 
+    /**
+     * @var IViewEngine
+     */
+    protected $viewEngine;
+
     public function __construct(){
         $this->container = new DIContainer();
         $this->router = new Router();
         $this->resolver = new ControllerResolver($this->container,$this->router);
-        $view = new ViewListener();
-        $this->dispatcher = new EventDispatcher();
-        $this->dispatcher->addSubscriber($view);
-        $this->kernel = new HttpKernel($this->dispatcher, $this->resolver);
+    }
+
+    public function setViewEngine($class){
+        $this->container->bindTo('PVC\\IViewEngine', DependencyBinder::to($class));
     }
 
     public function setControllerPath($path){
@@ -65,6 +70,10 @@ class HttpApplication{
      * @return Response
      */
     public function run(Request $request = null){
+        $view = new ViewListener($this->container->create('PVC\\IViewEngine'));
+        $this->dispatcher = new EventDispatcher();
+        $this->dispatcher->addSubscriber($view);
+        $this->kernel = new HttpKernel($this->dispatcher, $this->resolver);
         $this->container->bind($request ?: Request::createFromGlobals());
         $this->container->bind(Response::create());
         $this->container->bindTo("PVC\\IValueProvider",DependencyBinder::to("PVC\\DefaultValueProvider"));

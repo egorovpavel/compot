@@ -16,9 +16,22 @@ use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class ViewListener implements  EventSubscriberInterface{
+    /**
+     * @var IViewEngine
+     */
+    protected $viewEngine;
+
+    public function __construct(IViewEngine $viewEngine = null){
+        $this->viewEngine = $viewEngine;
+    }
 
     public function onKernelView(GetResponseForControllerResultEvent $event){
-        $event->setResponse(new Response($event->getControllerResult()));
+        if($this->viewEngine){
+            $res = $this->viewEngine->render($event->getControllerResult()->getTemplate, $event->getControllerResult()->getData());
+            $event->setResponse(new Response($res));
+        }else{
+            $event->setResponse(new Response("hui2"));
+        }
     }
     /**
      * Returns an array of event names this subscriber wants to listen to.

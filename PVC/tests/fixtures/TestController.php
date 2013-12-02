@@ -10,13 +10,16 @@
 namespace PVC\tests\fixtures;
 
 
+use PVC\ControllerTrait;
 use Symfony\Component\HttpFoundation\Request;
 
 class TestController {
+    use ControllerTrait;
 
     public function getIndexAction(Request $request, TestModelHintedClass $model, $id = null){
+        $this->bag = ['test'];
 
-        return "ok";
+        return $this->view();
     }
 
 }

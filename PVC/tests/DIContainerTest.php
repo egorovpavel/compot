@@ -139,12 +139,14 @@ class DIContainerTest extends \PHPUnit_Framework_TestCase
         );
         $app = new HttpApplication();
         $app->setControllerPath('PVC\\tests\\fixtures\\');
+        $app->setViewEngine('PVC\\DummyViewEngine');
         $app->mapRoute("test", "/{controller}/{action}/{id}", [
             'controller' => 'Test',
             'action' => 'index',
             'id' => "defaultId"
         ]);
         $resultRaw = $app->run(Request::create('/', 'GET', $params));
-        $this->assertEquals('ok',$resultRaw->getContent());
+
+        $this->assertEquals('dummy',$resultRaw->getContent());
     }
 }
