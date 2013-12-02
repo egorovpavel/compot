@@ -1,9 +1,9 @@
 {
-    "name": "egorovpavel/pvc",
+    "name": "egorovpavel/compot",
     "type": "library",
     "description": "php microframework",
     "keywords": ["php", "microframework"],
-    "homepage": "http://github.com/egorovpavel/pvc",
+    "homepage": "http://github.com/egorovpavel/compot",
     "license": "MIT",
     "authors": [
         {
@@ -18,6 +18,6 @@
         "phpunit/phpunit": "~3.7"
     },
     "autoload": {
-        "psr-0": {"PVC": ""}
+        "psr-0": {"compot": ""}
     }
 }
