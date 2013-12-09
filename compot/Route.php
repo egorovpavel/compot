@@ -41,8 +41,14 @@ class Route
      */
     protected $arguments;
 
+    /**
+     * @var string
+     */
+    protected $rawRule;
+
     public function __construct($name, $rule, $defaults = null, $acceptNull = false)
     {
+        $this->rawRule = $rule;
         $this->name = $name;
         $this->rule = self::prepareRule($rule, $defaults);
         $this->defaults = $defaults;
@@ -216,5 +222,23 @@ class Route
             }
         });
         return $result;
+    }
+
+    public function generateFor($controller = null, $action = null, $args = []){
+        $map = array_merge([
+            'controller' => strtolower($controller ?: $this->defaults['controller']),
+            'action' => strtolower($action ?: $this->defaults['action'])
+        ], $args ?: []);
+
+        $placeholders = [];
+
+        if (!empty($map)) {
+            foreach($map as $placeholder => $value){
+                $placeholders["{{$placeholder}}"] = $value;
+            }
+        }
+
+        $uri = str_replace(array_keys($placeholders), array_values($placeholders), $this->rawRule);
+        return $uri;
     }
 }

@@ -20,7 +20,7 @@ class Router
      */
     public function mapRoute($name, $rule, array $defaults = null, $acceptNull = false)
     {
-        $this->routes[$rule] = new Route($name, $rule, $defaults, $acceptNull);
+        $this->routes[$name] = new Route($name, $rule, $defaults, $acceptNull);
     }
 
     /**
@@ -35,4 +35,8 @@ class Router
         return null;
     }
 
+    public function getRoute($name)
+    {
+        return $this->routes[$name];
+    }
 }

@@ -27,7 +27,6 @@ class DefaultModelBinder implements IModelBinder
     public function resolve($prefix, $object)
     {
         $reflected = new \ReflectionClass($object);
-
         $properties = $reflected->getProperties();
         foreach ($properties as &$property) {
             if ($this->isSettable($property, $reflected)) {
