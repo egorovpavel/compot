@@ -73,9 +73,8 @@ class HttpApplication
      */
     public function run(Request $request = null)
     {
-        $view = new ViewListener($this->container->create('compot\\IViewEngine'));
         $this->dispatcher = new EventDispatcher();
-        $this->dispatcher->addSubscriber($view);
+        $this->dispatcher->addSubscriber($this->resolver);
         $this->kernel = new HttpKernel($this->dispatcher, $this->resolver);
         $this->container->bind($request ? : Request::createFromGlobals());
         $this->container->bind(Response::create());
@@ -87,6 +86,15 @@ class HttpApplication
         $result = $this->kernel->handle($request);
         $result->send();
         return $result;
+    }
+
+    public function bind($obj)
+    {
+        $this->container->bind($obj);
+    }
+
+    public function getInstanceOf($class){
+        return $this->container->create($class);
     }
 
     public function getRoute($name)

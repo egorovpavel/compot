@@ -10,24 +10,62 @@
 namespace compot;
 
 
+use compot\Responses\ControllerRedirectToActionResponse;
+use compot\Responses\ControllerViewResponse;
+use compot\Responses\IControllerResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\Validation;
+
 trait ControllerTrait {
     protected $bag = [];
+    /**
+     * @var ConstraintViolationList
+     */
+    private $validationErrors;
 
-    private function getAction(){
-        $trace = end(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,3));
-        $matches = [];
-        preg_match('/^(get|post|put|delete|patch|head)([a-zA-Z0-9_]*)Action$/',$trace['function'],$matches);
-        $action = $matches[2];
-        preg_match('/(.*)\\\([a-zA-Z0-9_]*)Controller$/',$trace['class'],$matches);
-        $controller = $matches[2];
-        return ['controller' => $controller, 'action' => $action];
+    /**
+     * @param $model
+     * @param array $groups
+     * @return bool
+     */
+    public function validate($model, $groups = []){
+        $builder = Validation::createValidatorBuilder();
+        $builder->enableAnnotationMapping();
+        $validator = $builder->getValidator();
+        $this->bag['_errors'] = $validator->validate($model, $groups);
+        if(count($this->bag['_errors']) > 0){
+            return false;
+        }
+        return true;
     }
 
-    public function view($template = null, $data = null){
-        $calledAction = $this->getAction();
+    /**
+     * @param $name
+     * @param null $action
+     * @param null $controller
+     * @param array $args
+     * @return IControllerResponse
+     */
+    public function redirectToAction($name, $action = null, $controller = null, $args = []){
 
-        $controllerResponse = new ControllerResponse();
-        $controllerResponse->setTemplatePath($template ?: $calledAction['controller'].DIRECTORY_SEPARATOR.$calledAction['action']);
+        $controllerResponse = new ControllerRedirectToActionResponse();
+        $controllerResponse->setName($name);
+        $controllerResponse->setAction($action);
+        $controllerResponse->setController($controller);
+        $controllerResponse->setArgs($args);
+        return $controllerResponse;
+    }
+
+    /**
+     * @param null $template
+     * @param null $data
+     * @return IControllerResponse
+     */
+    public function view($template = null,$data = null){
+
+        $controllerResponse = new ControllerViewResponse();
+        $controllerResponse->setTemplatePath($template);
         $controllerResponse->setData($data ?: $this->bag);
 
         return $controllerResponse;
