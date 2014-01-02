@@ -9,7 +9,6 @@
 
 namespace compot\tests\fixtures;
 
-
 use compot\IModel;
 
 class CustomTypeClass implements IModel

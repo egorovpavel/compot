@@ -9,12 +9,10 @@
 
 namespace tests;
 
-
 use compot\DefaultModelBinder;
 use compot\DefaultValueProvider;
 use compot\DependencyBinder;
 use compot\DIContainer;
-use compot\HttpApplication;
 use compot\tests\fixtures\CustomTypeClass;
 use compot\tests\fixtures\NoDependenciesClass;
 use compot\tests\fixtures\ResolvableDependencyClass;
@@ -25,7 +23,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DIContainerTest extends \PHPUnit_Framework_TestCase
 {
-
 
     public function testContainerResolvesClassWithoutDependencies()
     {
@@ -44,7 +41,6 @@ class DIContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($obj instanceof ResolvableDependencyClass);
         $this->assertTrue($obj->request instanceof Request);
     }
-
 
     public function testContainerWithUnBoundResolvableDependencies()
     {

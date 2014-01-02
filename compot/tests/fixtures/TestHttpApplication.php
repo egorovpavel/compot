@@ -9,10 +9,8 @@
 
 namespace compot\tests\fixtures;
 
-
 use compot\HttpApplication;
 
 class TestHttpApplication extends HttpApplication{
-
 
 }

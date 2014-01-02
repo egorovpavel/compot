@@ -9,7 +9,6 @@
 
 namespace compot\tests\fixtures;
 
-
 use compot\ControllerTrait;
 use Symfony\Component\HttpFoundation\Request;
 

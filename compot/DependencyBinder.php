@@ -9,7 +9,6 @@
 
 namespace compot;
 
-
 /**
  * Class DependencyBinder
  * @package compot

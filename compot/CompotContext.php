@@ -9,8 +9,6 @@
 
 namespace compot;
 
-
-
 class CompotContext
 {
     /**
@@ -57,6 +55,5 @@ class CompotContext
     {
         return $this->router;
     }
-
 
 }

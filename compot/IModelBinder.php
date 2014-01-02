@@ -9,7 +9,6 @@
 
 namespace compot;
 
-
 interface IModelBinder
 {
     public function __construct(IValueProvider $valueProvider);

@@ -2,9 +2,6 @@
 
 namespace compot;
 
-
-use Symfony\Component\HttpFoundation\Request;
-
 class Router
 {
     /**
@@ -13,10 +10,10 @@ class Router
     private $routes = [];
 
     /**
-     * @param string $name Route name must be used by url generator
-     * @param string $rule string Rule
-     * @param array $defaults  array of defaults
-     * @param bool $acceptNull sets default "empty value" behavior
+     * @param string $name       Route name must be used by url generator
+     * @param string $rule       string Rule
+     * @param array  $defaults   array of defaults
+     * @param bool   $acceptNull sets default "empty value" behavior
      */
     public function mapRoute($name, $rule, array $defaults = null, $acceptNull = false)
     {
@@ -24,7 +21,7 @@ class Router
     }
 
     /**
-     * @param string $uri
+     * @param  string     $uri
      * @return Route|null
      */
     public function match($uri)

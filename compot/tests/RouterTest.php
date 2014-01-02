@@ -9,11 +9,9 @@
 
 namespace tests;
 
-
 use compot\DIContainer;
 use compot\Route;
 use compot\Router;
-use Symfony\Component\HttpFoundation\Request;
 
 class RouterTest extends \PHPUnit_Framework_TestCase
 {
@@ -97,7 +95,6 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("default_someid", $actual->getArguments()['someid']);
 
     }
-
 
     public function testMatchesRouteRulesWithDefaultController()
     {

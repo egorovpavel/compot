@@ -9,7 +9,6 @@
 
 namespace compot\Responses;
 
-
 use compot\CompotContext;
 use compot\IControllerResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;

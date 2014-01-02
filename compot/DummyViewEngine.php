@@ -9,7 +9,6 @@
 
 namespace compot;
 
-
 class DummyViewEngine implements IViewEngine{
 
     public function render($template, $data)

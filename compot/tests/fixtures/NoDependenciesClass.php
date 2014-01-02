@@ -9,7 +9,6 @@
 
 namespace compot\tests\fixtures;
 
-
 class NoDependenciesClass implements DependencyInterface
 {
     public function __construct()

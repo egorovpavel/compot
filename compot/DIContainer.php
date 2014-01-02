@@ -10,7 +10,6 @@
 namespace compot;
 use compot\Exceptions\UnResolvableDependency;
 
-
 /**
  * Class DIContainer
  * @package compot
@@ -32,7 +31,6 @@ class DIContainer
      */
     protected $bindings = [];
 
-
     /**
      * @param $obj
      * @return Binder
@@ -45,7 +43,7 @@ class DIContainer
     }
 
     /**
-     * @param string $class
+     * @param string           $class
      * @param DependencyBinder $binder
      */
     public function bindTo($class, DependencyBinder $binder)
@@ -63,7 +61,7 @@ class DIContainer
 
     /**
      * @param \ReflectionClass $class
-     * @return $this|object
+     *                                @return $this|object
      */
     protected function getBound(\ReflectionClass $class)
     {
@@ -76,10 +74,9 @@ class DIContainer
             : $this->create($bind->getTarget());
     }
 
-
     /**
-     * @param \ReflectionClass $class
-     * @param array $args
+     * @param  \ReflectionClass $class
+     * @param  array            $args
      * @return object
      */
     protected function getInstance(\ReflectionClass $class, $args = array())
@@ -117,8 +114,8 @@ class DIContainer
     }
 
     /**
-     * @param object $obj
-     * @param string $method
+     * @param  object $obj
+     * @param  string $method
      * @return mixed
      */
     public function invoke($obj, $method)
@@ -129,7 +126,7 @@ class DIContainer
     }
 
     /**
-     * @param \ReflectionMethod $method
+     * @param  \ReflectionMethod $method
      * @return array
      * @throws \Exception
      */

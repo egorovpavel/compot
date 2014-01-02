@@ -9,7 +9,6 @@
 
 namespace compot\Converters;
 
-
 use compot\IConverter;
 
 class DefaultConverter implements IConverter
