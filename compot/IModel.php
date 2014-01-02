@@ -9,7 +9,6 @@
 
 namespace compot;
 
-
 interface IModel
 {
 

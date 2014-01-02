@@ -9,7 +9,6 @@
 
 namespace compot;
 
-
 interface IValueProvider
 {
     public function getValue($prefix, $name, \ReflectionClass $type = null);

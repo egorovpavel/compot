@@ -9,7 +9,6 @@
 
 namespace compot;
 
-
 class DefaultModelBinder implements IModelBinder
 {
 
@@ -22,7 +21,6 @@ class DefaultModelBinder implements IModelBinder
     {
         $this->valueProvider = $valueProvider;
     }
-
 
     public function resolve($prefix, $object)
     {

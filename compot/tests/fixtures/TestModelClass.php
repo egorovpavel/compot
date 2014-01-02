@@ -9,9 +9,7 @@
 
 namespace compot\tests\fixtures;
 
-
 use compot\IModel;
-use compot\ModelBinedableInterface;
 
 class TestModelClass implements DependencyInterface, IModel
 {

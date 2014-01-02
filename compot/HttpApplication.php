@@ -9,13 +9,11 @@
 
 namespace compot;
 
-
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\HttpKernel\HttpKernel;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class HttpApplication
 {
@@ -68,7 +66,7 @@ class HttpApplication
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return Response
      */
     public function run(Request $request = null)
@@ -81,7 +79,6 @@ class HttpApplication
         $this->container->bindTo("compot\\IValueProvider", DependencyBinder::to("compot\\DefaultValueProvider"));
         $this->container->setModelBinder($this->container->create("compot\\DefaultModelBinder"));
         $request = $this->container->create("Symfony\\Component\\HttpFoundation\\Request");
-
 
         $result = $this->kernel->handle($request);
         $result->send();

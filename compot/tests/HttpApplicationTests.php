@@ -9,10 +9,6 @@
 
 namespace tests;
 
-
-use compot\DIContainer;
-use compot\Route;
-use compot\Router;
 use Symfony\Component\HttpFoundation\Request;
 
 class RouterTest extends \PHPUnit_Framework_TestCase

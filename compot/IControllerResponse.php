@@ -9,7 +9,6 @@
 
 namespace compot;
 
-
 use compot\CompotContext;
 use Symfony\Component\HttpFoundation\Response;
 

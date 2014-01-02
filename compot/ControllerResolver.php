@@ -9,7 +9,6 @@
 
 namespace compot;
 
-
 use compot\IControllerResponse;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +36,7 @@ class ControllerResolver implements ControllerResolverInterface, EventSubscriber
 
     /**
      * @param DIContainer $container
-     * @param Router $router
+     * @param Router      $router
      */
     public function __construct(DIContainer $container, Router $router)
     {
@@ -144,7 +143,7 @@ class ControllerResolver implements ControllerResolverInterface, EventSubscriber
      * Returns the arguments to pass to the controller.
      *
      * @param Request $request    A Request instance
-     * @param mixed $controller A PHP callable
+     * @param mixed   $controller A PHP callable
      *
      * @return array An array of arguments to pass to the controller
      *

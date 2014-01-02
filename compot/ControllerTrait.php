@@ -9,11 +9,9 @@
 
 namespace compot;
 
-
 use compot\Responses\ControllerRedirectToActionResponse;
 use compot\Responses\ControllerViewResponse;
 use compot\Responses\IControllerResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validation;
 
@@ -26,7 +24,7 @@ trait ControllerTrait {
 
     /**
      * @param $model
-     * @param array $groups
+     * @param  array $groups
      * @return bool
      */
     public function validate($model, $groups = []){
@@ -42,9 +40,9 @@ trait ControllerTrait {
 
     /**
      * @param $name
-     * @param null $action
-     * @param null $controller
-     * @param array $args
+     * @param  null                $action
+     * @param  null                $controller
+     * @param  array               $args
      * @return IControllerResponse
      */
     public function redirectToAction($name, $action = null, $controller = null, $args = []){
@@ -58,8 +56,8 @@ trait ControllerTrait {
     }
 
     /**
-     * @param null $template
-     * @param null $data
+     * @param  null                $template
+     * @param  null                $data
      * @return IControllerResponse
      */
     public function view($template = null,$data = null){

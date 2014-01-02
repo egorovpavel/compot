@@ -9,7 +9,6 @@
 
 namespace compot;
 
-
 use compot\Converters\DefaultConverter;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -45,7 +44,7 @@ class DefaultValueProvider implements IValueProvider
     /**
      * @param $prefix
      * @param $name
-     * @param \ReflectionClass $type
+     * @param  \ReflectionClass $type
      * @return mixed|null
      */
     public function getValue($prefix, $name, \ReflectionClass $type = null)
@@ -74,7 +73,7 @@ class DefaultValueProvider implements IValueProvider
     }
 
     /**
-     * @param string $type
+     * @param  string             $type
      * @return \compot\IConverter
      */
     public function getConverterFor($type)

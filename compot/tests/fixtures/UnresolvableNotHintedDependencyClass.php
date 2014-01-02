@@ -9,7 +9,6 @@
 
 namespace compot\tests\fixtures;
 
-
 class UnresolvableNotHintedDependencyClass
 {
     public $dep;

@@ -9,7 +9,6 @@
 
 namespace compot\Exceptions;
 
-
 class UnResolvableDependency extends \Exception
 {
 

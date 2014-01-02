@@ -9,7 +9,6 @@
 
 namespace compot\tests\fixtures;
 
-
 use Symfony\Component\HttpFoundation\Request;
 
 class ResolvableUnboundDependencyClass
