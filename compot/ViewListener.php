@@ -25,10 +25,10 @@ class ViewListener implements  EventSubscriberInterface{
     }
 
     public function onKernelView(GetResponseForControllerResultEvent $event){
-        if($this->viewEngine && $event->getControllerResult() instanceof ControllerResponse){
+        if ($this->viewEngine && $event->getControllerResult() instanceof ControllerResponse) {
             $res = $this->viewEngine->render($event->getControllerResult()->getTemplatePath(), $event->getControllerResult()->getData());
             $event->setResponse(new Response($res));
-        }else{
+        } else {
             $event->setResponse(new Response("hui2"));
         }
     }

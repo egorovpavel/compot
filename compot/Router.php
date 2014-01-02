@@ -29,6 +29,7 @@ class Router
         foreach ($this->routes as &$route) {
             return $route->match($uri);
         }
+
         return null;
     }
 

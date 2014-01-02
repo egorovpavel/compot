@@ -51,11 +51,12 @@ class DefaultValueProvider implements IValueProvider
     {
         if ($type) {
             if (isset($this->converters[$type->getName()])) {
-
                 return $this->converters[$type->getName()]->convert($type, $this->getFromPrefix($prefix, $name));
             }
+
             return $this->defaultConverter->convert($type, $this->getFromPrefix($prefix, $name));
         }
+
         return $this->getFromPrefix($prefix, $name);
     }
 
@@ -69,6 +70,7 @@ class DefaultValueProvider implements IValueProvider
         for ($i = $this->request; $key = array_shift($prefix); $i = $i->get($key)) {
             if (!$i->get($key)) return null;
         }
+
         return $i instanceof Request ? $i->get($name) : $i[$name] ? : null;
     }
 

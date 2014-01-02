@@ -82,6 +82,7 @@ class HttpApplication
 
         $result = $this->kernel->handle($request);
         $result->send();
+
         return $result;
     }
 

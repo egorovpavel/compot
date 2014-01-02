@@ -63,6 +63,7 @@ class Route
                 $optionalContents = $isOptional ? '*' : '+';
                 $rule = "{$optionalGroup}(?P<{$rule[1]}>[^/]{$optionalContents}){$optionalGroup}";
             }
+
             return preg_replace_callback('/{([^}]*)}/', $convertToRegexp, $rule);
         };
 
@@ -191,6 +192,7 @@ class Route
             $this->target = $this->defaults['controller'];
             $this->action = $this->defaults['action'];
             $this->arguments = $this->filterArgs($this->defaults);
+
             return $this;
         }
         if (!empty($uri) && preg_match($this->rule, $uri, $matches)) {
@@ -207,8 +209,10 @@ class Route
             $this->target = $controller;
             $this->action = $action;
             $this->arguments = array_merge($def, $arr);
+
             return $this;
         }
+
         return null;
     }
 
@@ -220,6 +224,7 @@ class Route
                 $result[$key] = $item;
             }
         });
+
         return $result;
     }
 
@@ -232,12 +237,13 @@ class Route
         $placeholders = [];
 
         if (!empty($map)) {
-            foreach($map as $placeholder => $value){
+            foreach ($map as $placeholder => $value) {
                 $placeholders["{{$placeholder}}"] = $value;
             }
         }
 
         $uri = str_replace(array_keys($placeholders), array_values($placeholders), $this->rawRule);
+
         return $uri;
     }
 }
