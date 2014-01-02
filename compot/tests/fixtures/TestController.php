@@ -18,7 +18,7 @@ class TestController
 
     public function getIndexAction (Request $request, TestModelHintedClass $model, $id = null)
     {
-        $this->bag = [ 'test' ];
+        $this->bag = ['test'];
 
         return $this->view ();
     }

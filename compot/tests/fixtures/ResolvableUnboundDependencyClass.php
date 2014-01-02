@@ -17,14 +17,14 @@ class ResolvableUnboundDependencyClass
     public $dep2;
     public $idep;
 
-    public function __construct(ResolvableDependencyClass $dep, NoDependenciesClass $dep2, DependencyInterface $idep)
+    public function __construct (ResolvableDependencyClass $dep, NoDependenciesClass $dep2, DependencyInterface $idep)
     {
-        $this->dep = $dep;
+        $this->dep  = $dep;
         $this->dep2 = $dep2;
         $this->idep = $idep;
     }
 
-    public function controller(Request $request, ResolvableDependencyClass $dep1, DependencyInterface $idep)
+    public function controller (Request $request, ResolvableDependencyClass $dep1, DependencyInterface $idep)
     {
         return $request && $dep1 && $idep;
     }

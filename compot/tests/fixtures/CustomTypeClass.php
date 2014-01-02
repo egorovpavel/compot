@@ -22,7 +22,7 @@ class CustomTypeClass implements IModel
     /**
      * @param \DateTime $value
      */
-    public function setValue(\DateTime $value)
+    public function setValue (\DateTime $value)
     {
         $this->value = $value;
     }
@@ -30,7 +30,7 @@ class CustomTypeClass implements IModel
     /**
      * @return \DateTime
      */
-    public function getValue()
+    public function getValue ()
     {
         return $this->value;
     }

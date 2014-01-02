@@ -11,5 +11,5 @@ namespace compot;
 
 interface IConverter
 {
-    public function convert(\ReflectionClass $type, $value);
+    public function convert (\ReflectionClass $type, $value);
 }

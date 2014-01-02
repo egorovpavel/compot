@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Validation;
 
 trait ControllerTrait
 {
-    protected $bag = [ ];
+    protected $bag = [];
     /**
      * @var ConstraintViolationList
      */
@@ -29,13 +29,13 @@ trait ControllerTrait
      *
      * @return bool
      */
-    public function validate ($model, $groups = [ ])
+    public function validate ($model, $groups = [])
     {
         $builder = Validation::createValidatorBuilder ();
         $builder->enableAnnotationMapping ();
         $validator            = $builder->getValidator ();
         $this->bag['_errors'] = $validator->validate ($model, $groups);
-        if ( count ($this->bag['_errors']) > 0 ) {
+        if (count ($this->bag['_errors']) > 0) {
             return false;
         }
 
@@ -50,7 +50,7 @@ trait ControllerTrait
      *
      * @return IControllerResponse
      */
-    public function redirectToAction ($name, $action = null, $controller = null, $args = [ ])
+    public function redirectToAction ($name, $action = null, $controller = null, $args = [])
     {
 
         $controllerResponse = new ControllerRedirectToActionResponse();

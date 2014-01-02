@@ -28,11 +28,11 @@ class ViewListener implements EventSubscriberInterface
 
     public function onKernelView (GetResponseForControllerResultEvent $event)
     {
-        if ( $this->viewEngine && $event->getControllerResult () instanceof ControllerResponse ) {
+        if ($this->viewEngine && $event->getControllerResult () instanceof ControllerResponse) {
             $res = $this->viewEngine->render ($event->getControllerResult ()->getTemplatePath (), $event->getControllerResult ()->getData ());
-            $event->setResponse (new Response( $res ));
+            $event->setResponse (new Response($res));
         } else {
-            $event->setResponse (new Response( "hui2" ));
+            $event->setResponse (new Response("hui2"));
         }
     }
 
@@ -58,6 +58,6 @@ class ViewListener implements EventSubscriberInterface
      */
     public static function getSubscribedEvents ()
     {
-        return array ( KernelEvents::VIEW => 'onKernelView', );
+        return array (KernelEvents::VIEW => 'onKernelView',);
     }
 }

@@ -18,11 +18,11 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     {
         date_default_timezone_set ("UTC");
         $date   = date ("Y-m-d H:i:s");
-        $params = array ( "prop" => "propValue", "prop1" => $date, "prop2" => array ( "id" => 12, "value" => $date ) );
+        $params = array ("prop" => "propValue", "prop1" => $date, "prop2" => array ("id" => 12, "value" => $date));
         $app    = new HttpApplication();
         $app->setControllerPath ('compot\\tests\\fixtures\\');
         $app->setViewEngine ('compot\\DummyViewEngine');
-        $app->mapRoute ("test", "/{controller}/{action}/{id}", [ 'controller' => 'Test', 'action' => 'index', 'id' => "defaultId" ]);
+        $app->mapRoute ("test", "/{controller}/{action}/{id}", ['controller' => 'Test', 'action' => 'index', 'id' => "defaultId"]);
         $resultRaw = $app->run (Request::create ('/', 'GET', $params));
 
         $this->assertEquals ('dummy', $resultRaw->getContent ());

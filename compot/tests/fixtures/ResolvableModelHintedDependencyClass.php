@@ -16,9 +16,9 @@ class ResolvableModelHintedDependencyClass
     public $request;
     public $model;
 
-    public function __construct(Request $request, TestModelHintedClass $model)
+    public function __construct (Request $request, TestModelHintedClass $model)
     {
         $this->request = $request;
-        $this->model = $model;
+        $this->model   = $model;
     }
 }

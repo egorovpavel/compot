@@ -25,12 +25,12 @@ class DIContainer
     /**
      * @var array
      */
-    protected $singletons = [ ];
+    protected $singletons = [];
 
     /**
      * @var Binder[]
      */
-    protected $bindings = [ ];
+    protected $bindings = [];
 
     /**
      * @param $obj
@@ -69,10 +69,10 @@ class DIContainer
      */
     protected function getBound (\ReflectionClass $class)
     {
-        $bind = isset( $this->bindings[$class->getName ()] )
+        $bind = isset($this->bindings[$class->getName ()])
             ? $this->bindings[$class->getName ()]
             : null;
-        if ( !$bind ) {
+        if (!$bind) {
             return $this->create ($class->getName ());
         }
 
@@ -89,7 +89,7 @@ class DIContainer
      */
     protected function getInstance (\ReflectionClass $class, $args = array ())
     {
-        if ( isset( $this->bindings[$class->getName ()] ) ) {
+        if (isset($this->bindings[$class->getName ()])) {
             return $this->getBound ($class, $args);
         }
 
@@ -103,21 +103,21 @@ class DIContainer
      */
     public function create ($class)
     {
-        if ( $class == get_class ($this) ) {
+        if ($class == get_class ($this)) {
             return $this;
         }
 
-        $reflector = new \ReflectionClass( $class );
+        $reflector = new \ReflectionClass($class);
 
         $constructor = $reflector->getConstructor ();
 
-        if ( $constructor && $constructor->getParameters () && !isset( $this->bindings[$reflector->getName ()] ) ) {
+        if ($constructor && $constructor->getParameters () && !isset($this->bindings[$reflector->getName ()])) {
             return $this->getInstance ($reflector, $this->resolveDependencies ($constructor));
         }
 
         $instance = $this->getInstance ($reflector);
-        if ( $reflector->implementsInterface ("compot\\IModel") ) {
-            $this->modelBinder->resolve ([ ], $instance);
+        if ($reflector->implementsInterface ("compot\\IModel")) {
+            $this->modelBinder->resolve ([], $instance);
         }
 
         return $instance;
@@ -131,7 +131,7 @@ class DIContainer
      */
     public function invoke ($obj, $method)
     {
-        $reflector = new \ReflectionClass( $obj );
+        $reflector = new \ReflectionClass($obj);
         $method    = $reflector->getMethod ($method);
 
         return $method->invoke ($obj, $this->resolveDependencies ($method));
@@ -146,14 +146,14 @@ class DIContainer
     protected function resolveDependencies (\ReflectionMethod $method)
     {
         $params       = $method->getParameters ();
-        $dependencies = [ ];
+        $dependencies = [];
 
-        foreach ( $params as &$parameter ) {
-            if ( ( $reflector = $parameter->getClass () ) ) {
+        foreach ($params as &$parameter) {
+            if (($reflector = $parameter->getClass ())) {
                 $dependencies[] = $this->getBound ($reflector)
                     ? : $this->create ($reflector->getName ());
-            } elseif ( $this->modelBinder ) {
-                $dependencies[] = $this->modelBinder->getValueProvider ()->getValue ([ ], $parameter->getName ());
+            } elseif ($this->modelBinder) {
+                $dependencies[] = $this->modelBinder->getValueProvider ()->getValue ([], $parameter->getName ());
             } else {
                 throw new UnResolvableDependency();
             }
@@ -164,7 +164,7 @@ class DIContainer
 
     public function resolveDependenciesFor ($obj, $methodName)
     {
-        $reflector = new \ReflectionClass( $obj );
+        $reflector = new \ReflectionClass($obj);
         $method    = $reflector->getMethod ($methodName);
 
         return $this->resolveDependencies ($method);

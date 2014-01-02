@@ -51,8 +51,8 @@ class DefaultValueProvider implements IValueProvider
      */
     public function getValue ($prefix, $name, \ReflectionClass $type = null)
     {
-        if ( $type ) {
-            if ( isset( $this->converters[$type->getName ()] ) ) {
+        if ($type) {
+            if (isset($this->converters[$type->getName ()])) {
                 return $this->converters[$type->getName ()]->convert ($type, $this->getFromPrefix ($prefix, $name));
             }
 
@@ -70,8 +70,8 @@ class DefaultValueProvider implements IValueProvider
      */
     protected function getFromPrefix ($prefix, $name)
     {
-        for ( $i = $this->request; $key = array_shift ($prefix); $i = $i->get ($key) ) {
-            if ( !$i->get ($key) ) {
+        for ($i = $this->request; $key = array_shift ($prefix); $i = $i->get ($key)) {
+            if (!$i->get ($key)) {
                 return null;
             }
         }

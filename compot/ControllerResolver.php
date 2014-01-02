@@ -66,21 +66,21 @@ class ControllerResolver implements ControllerResolverInterface, EventSubscriber
      */
     public static function getSubscribedEvents ()
     {
-        return array ( KernelEvents::VIEW => 'onKernelView', );
+        return array (KernelEvents::VIEW => 'onKernelView',);
     }
 
     public function onKernelView (GetResponseForControllerResultEvent $event)
     {
         $viewEngine = $this->container->create ("compot\\IViewEngine");
 
-        $context = new CompotContext( $this->container, $this->matchedRoute, $this->router );
+        $context = new CompotContext($this->container, $this->matchedRoute, $this->router);
 
-        if ( $viewEngine && $event->getControllerResult () instanceof IControllerResponse ) {
+        if ($viewEngine && $event->getControllerResult () instanceof IControllerResponse) {
             $controllerResponse = $event->getControllerResult ();
             $response           = $controllerResponse->getResponse ($context);
             $event->setResponse ($response);
-        } elseif ( $viewEngine && is_string ($event->getControllerResult ()) ) {
-            $event->setResponse (new Response( $event->getControllerResult () ));
+        } elseif ($viewEngine && is_string ($event->getControllerResult ())) {
+            $event->setResponse (new Response($event->getControllerResult ()));
         }
 
     }
@@ -112,31 +112,31 @@ class ControllerResolver implements ControllerResolverInterface, EventSubscriber
     {
         $this->matchedRoute = $this->router->match ($request->getPathInfo ());
 
-        if ( !$this->matchedRoute ) {
+        if (!$this->matchedRoute) {
             return false;
         }
 
         try {
             $controllerInstance = $this->container->create ($this->path . $this->matchedRoute->getTarget () . 'Controller');
         }
-        catch ( \ReflectionException $e ) {
+        catch (\ReflectionException $e) {
             return false;
         }
 
         $actionName = strtolower ($request->getMethod ()) . ucfirst (strtolower ($this->matchedRoute->getAction ())) . 'Action';
 
-        if ( !method_exists ($controllerInstance, $actionName) ) {
+        if (!method_exists ($controllerInstance, $actionName)) {
             return false;
         }
 
         $args = $this->matchedRoute->getArguments ();
-        foreach ( $args as $key => $value ) {
+        foreach ($args as $key => $value) {
             $request->query->set ($key, $value);
         }
 
         $this->dependencies = $this->container->resolveDependenciesFor ($controllerInstance, $actionName);
 
-        return array ( $controllerInstance, $actionName );
+        return array ($controllerInstance, $actionName);
     }
 
     /**

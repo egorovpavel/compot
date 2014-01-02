@@ -11,6 +11,7 @@ namespace compot;
 
 /**
  * Class DependencyBinder
+ *
  * @package compot
  */
 class DependencyBinder
@@ -22,21 +23,22 @@ class DependencyBinder
     /**
      * @var bool
      */
-    private $singleton = FALSE;
+    private $singleton = false;
 
     /**
      * @param $target
      */
-    private function __construct($target)
+    private function __construct ($target)
     {
         $this->target = $target;
     }
 
     /**
      * @param $target
+     *
      * @return DependencyBinder
      */
-    public static function to($target)
+    public static function to ($target)
     {
         $inst = new DependencyBinder($target);
 
@@ -46,7 +48,7 @@ class DependencyBinder
     /**
      * @return $this
      */
-    public function asSingleton()
+    public function asSingleton ()
     {
         $this->singleton = true;
 
@@ -56,7 +58,7 @@ class DependencyBinder
     /**
      * @return bool
      */
-    public function isSingleton()
+    public function isSingleton ()
     {
         return $this->singleton;
     }
@@ -64,7 +66,7 @@ class DependencyBinder
     /**
      * @return mixed
      */
-    public function getTarget()
+    public function getTarget ()
     {
         return $this->target;
     }

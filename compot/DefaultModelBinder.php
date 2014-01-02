@@ -24,10 +24,10 @@ class DefaultModelBinder implements IModelBinder
 
     public function resolve ($prefix, $object)
     {
-        $reflected  = new \ReflectionClass( $object );
+        $reflected  = new \ReflectionClass($object);
         $properties = $reflected->getProperties ();
-        foreach ( $properties as &$property ) {
-            if ( $this->isSettable ($property, $reflected) ) {
+        foreach ($properties as &$property) {
+            if ($this->isSettable ($property, $reflected)) {
                 $this->setValue ($prefix, $reflected, $property, $object);
             }
         }
@@ -42,7 +42,7 @@ class DefaultModelBinder implements IModelBinder
 
     protected function isSettable (\ReflectionProperty $property, \ReflectionClass $class)
     {
-        if ( $property->isPublic () ) {
+        if ($property->isPublic ()) {
             return true;
         }
 
@@ -57,14 +57,14 @@ class DefaultModelBinder implements IModelBinder
     protected function setValue ($prefix, \ReflectionClass $class, \ReflectionProperty $property, $obj)
     {
         $methodName = "set" . ucfirst ($property->getName ());
-        if ( $class->hasMethod ($methodName) ) {
+        if ($class->hasMethod ($methodName)) {
             $method    = $class->getMethod ($methodName);
             $parameter = reset ($method->getParameters ());
             /**
              * @var \ReflectionClass
              */
             $type = $parameter->getClass ();
-            if ( $type instanceof \ReflectionClass && $type->implementsInterface ("compot\\IModel") ) {
+            if ($type instanceof \ReflectionClass && $type->implementsInterface ("compot\\IModel")) {
                 $prefix[] = $property->getName ();
                 $value    = $this->resolveInstance ($prefix, $type);
             } else {

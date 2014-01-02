@@ -7,7 +7,7 @@ class Router
     /**
      * @var Route[]
      */
-    private $routes = [ ];
+    private $routes = [];
 
     /**
      * @param string $name       Route name must be used by url generator
@@ -17,7 +17,7 @@ class Router
      */
     public function mapRoute ($name, $rule, array $defaults = null, $acceptNull = false)
     {
-        $this->routes[$name] = new Route( $name, $rule, $defaults, $acceptNull );
+        $this->routes[$name] = new Route($name, $rule, $defaults, $acceptNull);
     }
 
     /**
@@ -27,7 +27,7 @@ class Router
      */
     public function match ($uri)
     {
-        foreach ( $this->routes as &$route ) {
+        foreach ($this->routes as &$route) {
             return $route->match ($uri);
         }
 

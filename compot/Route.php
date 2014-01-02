@@ -57,8 +57,8 @@ class Route
     public static function prepareRule ($rule, $defaults)
     {
         $convertToRegexp = function ($rule) use (&$defaults, &$convertToRegexp) {
-            if ( is_array ($rule) ) {
-                $isOptional       = ( $defaults && array_key_exists ($rule[1], $defaults) );
+            if (is_array ($rule)) {
+                $isOptional       = ($defaults && array_key_exists ($rule[1], $defaults));
                 $optionalGroup    = $isOptional
                     ? '?'
                     : '';
@@ -193,26 +193,26 @@ class Route
      */
     public function match ($uri)
     {
-        if ( empty( $uri ) && isset( $this->defaults['controller'] ) && isset( $this->defaults['action'] ) ) {
+        if (empty($uri) && isset($this->defaults['controller']) && isset($this->defaults['action'])) {
             $this->target    = $this->defaults['controller'];
             $this->action    = $this->defaults['action'];
             $this->arguments = $this->filterArgs ($this->defaults);
 
             return $this;
         }
-        if ( !empty( $uri ) && preg_match ($this->rule, $uri, $matches) ) {
-            $controller = isset( $matches['controller'] ) && $matches['controller']
+        if (!empty($uri) && preg_match ($this->rule, $uri, $matches)) {
+            $controller = isset($matches['controller']) && $matches['controller']
                 ? $matches['controller']
                 : $this->defaults['controller'];
             $action     = $matches['action']
                 ? : $this->defaults['action'];
 
             $def = $this->filterArgs ($this->defaults
-                ? : [ ]);
+                ? : []);
             $arr = $this->filterArgs ($matches
-                ? : [ ]);
+                ? : []);
 
-            if ( !$this->acceptNull ) {
+            if (!$this->acceptNull) {
                 $arr = array_filter ($arr, 'strlen');
             }
 
@@ -226,11 +226,11 @@ class Route
         return null;
     }
 
-    protected function filterArgs ($arguments = [ ])
+    protected function filterArgs ($arguments = [])
     {
-        $result = [ ];
+        $result = [];
         array_walk ($arguments, function ($item, $key) use (&$result) {
-            if ( !is_int ($key) && !in_array ($key, [ 'controller', 'action' ]) ) {
+            if (!is_int ($key) && !in_array ($key, ['controller', 'action'])) {
                 $result[$key] = $item;
             }
         });
@@ -238,17 +238,17 @@ class Route
         return $result;
     }
 
-    public function generateFor ($controller = null, $action = null, $args = [ ])
+    public function generateFor ($controller = null, $action = null, $args = [])
     {
-        $map = array_merge ([ 'controller'               => strtolower ($controller
+        $map = array_merge (['controller'                => strtolower ($controller
             ? : $this->defaults['controller']), 'action' => strtolower ($action
-            ? : $this->defaults['action']) ], $args
-            ? : [ ]);
+            ? : $this->defaults['action'])], $args
+            ? : []);
 
-        $placeholders = [ ];
+        $placeholders = [];
 
-        if ( !empty( $map ) ) {
-            foreach ( $map as $placeholder => $value ) {
+        if (!empty($map)) {
+            foreach ($map as $placeholder => $value) {
                 $placeholders["{{$placeholder}}"] = $value;
             }
         }

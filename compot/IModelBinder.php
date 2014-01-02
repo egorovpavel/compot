@@ -11,12 +11,12 @@ namespace compot;
 
 interface IModelBinder
 {
-    public function __construct(IValueProvider $valueProvider);
+    public function __construct (IValueProvider $valueProvider);
 
     /**
      * @return IValueProvider
      */
-    public function getValueProvider();
+    public function getValueProvider ();
 
-    public function resolve($prefix, $object);
+    public function resolve ($prefix, $object);
 }

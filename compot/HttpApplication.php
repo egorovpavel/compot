@@ -47,7 +47,7 @@ class HttpApplication
     {
         $this->container = new DIContainer();
         $this->router    = new Router();
-        $this->resolver  = new ControllerResolver( $this->container, $this->router );
+        $this->resolver  = new ControllerResolver($this->container, $this->router);
     }
 
     public function setViewEngine ($class)
@@ -74,7 +74,7 @@ class HttpApplication
     {
         $this->dispatcher = new EventDispatcher();
         $this->dispatcher->addSubscriber ($this->resolver);
-        $this->kernel = new HttpKernel( $this->dispatcher, $this->resolver );
+        $this->kernel = new HttpKernel($this->dispatcher, $this->resolver);
         $this->container->bind ($request
             ? : Request::createFromGlobals ());
         $this->container->bind (Response::create ());
