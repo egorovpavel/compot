@@ -20,5 +20,5 @@ interface IControllerResponse
      *
      * @return Response
      */
-    public function getResponse (CompotContext $context);
+    public function getResponse(CompotContext $context);
 }

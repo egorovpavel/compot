@@ -11,5 +11,5 @@ namespace compot;
 
 interface IViewEngine
 {
-    public function render ($template, $data);
+    public function render($template, $data);
 }

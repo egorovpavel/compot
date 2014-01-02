@@ -14,9 +14,9 @@ use compot\IConverter;
 class DefaultConverter implements IConverter
 {
 
-    public function convert (\ReflectionClass $type, $value)
+    public function convert(\ReflectionClass $type, $value)
     {
-        return $type->newInstanceArgs ([$value]);
+        return $type->newInstanceArgs([$value]);
     }
 
 }

@@ -23,7 +23,7 @@ class ControllerRedirectToActionResponse implements IControllerResponse
     /**
      * @return mixed
      */
-    public function getName ()
+    public function getName()
     {
         return $this->name;
     }
@@ -31,7 +31,7 @@ class ControllerRedirectToActionResponse implements IControllerResponse
     /**
      * @param mixed $name
      */
-    public function setName ($name)
+    public function setName($name)
     {
         $this->name = $name;
     }
@@ -39,7 +39,7 @@ class ControllerRedirectToActionResponse implements IControllerResponse
     /**
      * @return array
      */
-    public function getArgs ()
+    public function getArgs()
     {
         return $this->args;
     }
@@ -47,7 +47,7 @@ class ControllerRedirectToActionResponse implements IControllerResponse
     /**
      * @param array $args
      */
-    public function setArgs ($args)
+    public function setArgs($args)
     {
         $this->args = $args;
     }
@@ -55,7 +55,7 @@ class ControllerRedirectToActionResponse implements IControllerResponse
     /**
      * @return mixed
      */
-    public function getAction ()
+    public function getAction()
     {
         return $this->action;
     }
@@ -63,7 +63,7 @@ class ControllerRedirectToActionResponse implements IControllerResponse
     /**
      * @param mixed $action
      */
-    public function setAction ($action)
+    public function setAction($action)
     {
         $this->action = $action;
     }
@@ -71,7 +71,7 @@ class ControllerRedirectToActionResponse implements IControllerResponse
     /**
      * @return mixed
      */
-    public function getController ()
+    public function getController()
     {
         return $this->controller;
     }
@@ -79,13 +79,17 @@ class ControllerRedirectToActionResponse implements IControllerResponse
     /**
      * @param mixed $controller
      */
-    public function setController ($controller)
+    public function setController($controller)
     {
         $this->controller = $controller;
     }
 
-    public function getResponse (CompotContext $context)
+    public function getResponse(CompotContext $context)
     {
-        return new RedirectResponse($context->getRouter ()->getRoute ($this->getName ())->generateFor ($this->getController (), $this->getAction (), $this->getArgs ()));
+        return new RedirectResponse($context->getRouter()->getRoute($this->getName())->generateFor(
+            $this->getController(),
+            $this->getAction(),
+            $this->getArgs()
+        ));
     }
 }

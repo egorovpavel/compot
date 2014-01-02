@@ -38,7 +38,7 @@ class ControllerResolver implements ControllerResolverInterface, EventSubscriber
      * @param DIContainer $container
      * @param Router      $router
      */
-    public function __construct (DIContainer $container, Router $router)
+    public function __construct(DIContainer $container, Router $router)
     {
         $this->container = $container;
         $this->router    = $router;
@@ -64,28 +64,28 @@ class ControllerResolver implements ControllerResolverInterface, EventSubscriber
      *
      * @api
      */
-    public static function getSubscribedEvents ()
+    public static function getSubscribedEvents()
     {
         return array (KernelEvents::VIEW => 'onKernelView',);
     }
 
-    public function onKernelView (GetResponseForControllerResultEvent $event)
+    public function onKernelView(GetResponseForControllerResultEvent $event)
     {
-        $viewEngine = $this->container->create ("compot\\IViewEngine");
+        $viewEngine = $this->container->create("compot\\IViewEngine");
 
         $context = new CompotContext($this->container, $this->matchedRoute, $this->router);
 
-        if ($viewEngine && $event->getControllerResult () instanceof IControllerResponse) {
-            $controllerResponse = $event->getControllerResult ();
-            $response           = $controllerResponse->getResponse ($context);
-            $event->setResponse ($response);
-        } elseif ($viewEngine && is_string ($event->getControllerResult ())) {
-            $event->setResponse (new Response($event->getControllerResult ()));
+        if ($viewEngine && $event->getControllerResult() instanceof IControllerResponse) {
+            $controllerResponse = $event->getControllerResult();
+            $response           = $controllerResponse->getResponse($context);
+            $event->setResponse($response);
+        } elseif ($viewEngine && is_string($event->getControllerResult())) {
+            $event->setResponse(new Response($event->getControllerResult()));
         }
 
     }
 
-    public function setControllerPath ($path)
+    public function setControllerPath($path)
     {
         $this->path = $path;
     }
@@ -108,33 +108,36 @@ class ControllerResolver implements ControllerResolverInterface, EventSubscriber
      *
      * @api
      */
-    public function getController (Request $request)
+    public function getController(Request $request)
     {
-        $this->matchedRoute = $this->router->match ($request->getPathInfo ());
+        $this->matchedRoute = $this->router->match($request->getPathInfo());
 
         if (!$this->matchedRoute) {
             return false;
         }
 
         try {
-            $controllerInstance = $this->container->create ($this->path . $this->matchedRoute->getTarget () . 'Controller');
-        }
-        catch (\ReflectionException $e) {
+            $controllerInstance = $this->container->create(
+                $this->path . $this->matchedRoute->getTarget() . 'Controller'
+            );
+        } catch (\ReflectionException $e) {
             return false;
         }
 
-        $actionName = strtolower ($request->getMethod ()) . ucfirst (strtolower ($this->matchedRoute->getAction ())) . 'Action';
+        $actionName = strtolower($request->getMethod()) . ucfirst(
+                strtolower($this->matchedRoute->getAction())
+            ) . 'Action';
 
-        if (!method_exists ($controllerInstance, $actionName)) {
+        if (!method_exists($controllerInstance, $actionName)) {
             return false;
         }
 
-        $args = $this->matchedRoute->getArguments ();
+        $args = $this->matchedRoute->getArguments();
         foreach ($args as $key => $value) {
-            $request->query->set ($key, $value);
+            $request->query->set($key, $value);
         }
 
-        $this->dependencies = $this->container->resolveDependenciesFor ($controllerInstance, $actionName);
+        $this->dependencies = $this->container->resolveDependenciesFor($controllerInstance, $actionName);
 
         return array ($controllerInstance, $actionName);
     }
@@ -151,7 +154,7 @@ class ControllerResolver implements ControllerResolverInterface, EventSubscriber
      *
      * @api
      */
-    public function getArguments (Request $request, $controller)
+    public function getArguments(Request $request, $controller)
     {
         return $this->dependencies;
     }

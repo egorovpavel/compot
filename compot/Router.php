@@ -15,7 +15,7 @@ class Router
      * @param array  $defaults   array of defaults
      * @param bool   $acceptNull sets default "empty value" behavior
      */
-    public function mapRoute ($name, $rule, array $defaults = null, $acceptNull = false)
+    public function mapRoute($name, $rule, array $defaults = null, $acceptNull = false)
     {
         $this->routes[$name] = new Route($name, $rule, $defaults, $acceptNull);
     }
@@ -25,16 +25,16 @@ class Router
      *
      * @return Route|null
      */
-    public function match ($uri)
+    public function match($uri)
     {
         foreach ($this->routes as &$route) {
-            return $route->match ($uri);
+            return $route->match($uri);
         }
 
         return null;
     }
 
-    public function getRoute ($name)
+    public function getRoute($name)
     {
         return $this->routes[$name];
     }

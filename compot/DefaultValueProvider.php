@@ -36,7 +36,7 @@ class DefaultValueProvider implements IValueProvider
     /**
      * @param Request $request
      */
-    public function __construct (Request $request)
+    public function __construct(Request $request)
     {
         $this->request          = $request;
         $this->defaultConverter = new DefaultConverter();
@@ -49,17 +49,17 @@ class DefaultValueProvider implements IValueProvider
      *
      * @return mixed|null
      */
-    public function getValue ($prefix, $name, \ReflectionClass $type = null)
+    public function getValue($prefix, $name, \ReflectionClass $type = null)
     {
         if ($type) {
-            if (isset($this->converters[$type->getName ()])) {
-                return $this->converters[$type->getName ()]->convert ($type, $this->getFromPrefix ($prefix, $name));
+            if (isset($this->converters[$type->getName()])) {
+                return $this->converters[$type->getName()]->convert($type, $this->getFromPrefix($prefix, $name));
             }
 
-            return $this->defaultConverter->convert ($type, $this->getFromPrefix ($prefix, $name));
+            return $this->defaultConverter->convert($type, $this->getFromPrefix($prefix, $name));
         }
 
-        return $this->getFromPrefix ($prefix, $name);
+        return $this->getFromPrefix($prefix, $name);
     }
 
     /**
@@ -68,16 +68,16 @@ class DefaultValueProvider implements IValueProvider
      *
      * @return mixed|null
      */
-    protected function getFromPrefix ($prefix, $name)
+    protected function getFromPrefix($prefix, $name)
     {
-        for ($i = $this->request; $key = array_shift ($prefix); $i = $i->get ($key)) {
-            if (!$i->get ($key)) {
+        for ($i = $this->request; $key = array_shift($prefix); $i = $i->get($key)) {
+            if (!$i->get($key)) {
                 return null;
             }
         }
 
         return $i instanceof Request
-            ? $i->get ($name)
+            ? $i->get($name)
             : $i[$name]
                 ? : null;
     }
@@ -87,7 +87,7 @@ class DefaultValueProvider implements IValueProvider
      *
      * @return \compot\IConverter
      */
-    public function getConverterFor ($type)
+    public function getConverterFor($type)
     {
         return $this->converters[$type];
     }
@@ -96,7 +96,7 @@ class DefaultValueProvider implements IValueProvider
      * @param            $type
      * @param IConverter $converter
      */
-    public function addConverter ($type, IConverter $converter)
+    public function addConverter($type, IConverter $converter)
     {
         $this->converters[$type] = $converter;
     }

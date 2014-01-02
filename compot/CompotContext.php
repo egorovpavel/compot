@@ -25,7 +25,7 @@ class CompotContext
      */
     protected $router;
 
-    public function __construct (DIContainer $container, Route $route, Router $router)
+    public function __construct(DIContainer $container, Route $route, Router $router)
     {
         $this->container = $container;
         $this->route     = $route;
@@ -35,7 +35,7 @@ class CompotContext
     /**
      * @return \compot\DIContainer
      */
-    public function getContainer ()
+    public function getContainer()
     {
         return $this->container;
     }
@@ -43,7 +43,7 @@ class CompotContext
     /**
      * @return \compot\Route
      */
-    public function getRoute ()
+    public function getRoute()
     {
         return $this->route;
     }
@@ -51,7 +51,7 @@ class CompotContext
     /**
      * @return \compot\Router
      */
-    public function getRouter ()
+    public function getRouter()
     {
         return $this->router;
     }

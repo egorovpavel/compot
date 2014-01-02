@@ -27,7 +27,7 @@ class TestModelClass implements DependencyInterface, IModel
     /**
      * @param mixed $prop1
      */
-    public function setProp1 ($prop1)
+    public function setProp1($prop1)
     {
         $this->prop1 = $prop1;
     }
@@ -35,7 +35,7 @@ class TestModelClass implements DependencyInterface, IModel
     /**
      * @return mixed
      */
-    public function getProp1 ()
+    public function getProp1()
     {
         return $this->prop1;
     }
@@ -43,7 +43,7 @@ class TestModelClass implements DependencyInterface, IModel
     /**
      * @param CustomTypeClass $prop2
      */
-    public function setProp2 ($prop2)
+    public function setProp2($prop2)
     {
         $this->prop2 = $prop2;
     }
@@ -51,7 +51,7 @@ class TestModelClass implements DependencyInterface, IModel
     /**
      * @return CustomTypeClass
      */
-    public function getProp2 ()
+    public function getProp2()
     {
         return $this->prop2;
     }

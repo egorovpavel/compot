@@ -29,13 +29,13 @@ trait ControllerTrait
      *
      * @return bool
      */
-    public function validate ($model, $groups = [])
+    public function validate($model, $groups = [])
     {
-        $builder = Validation::createValidatorBuilder ();
-        $builder->enableAnnotationMapping ();
-        $validator            = $builder->getValidator ();
-        $this->bag['_errors'] = $validator->validate ($model, $groups);
-        if (count ($this->bag['_errors']) > 0) {
+        $builder = Validation::createValidatorBuilder();
+        $builder->enableAnnotationMapping();
+        $validator            = $builder->getValidator();
+        $this->bag['_errors'] = $validator->validate($model, $groups);
+        if (count($this->bag['_errors']) > 0) {
             return false;
         }
 
@@ -50,14 +50,14 @@ trait ControllerTrait
      *
      * @return IControllerResponse
      */
-    public function redirectToAction ($name, $action = null, $controller = null, $args = [])
+    public function redirectToAction($name, $action = null, $controller = null, $args = [])
     {
 
         $controllerResponse = new ControllerRedirectToActionResponse();
-        $controllerResponse->setName ($name);
-        $controllerResponse->setAction ($action);
-        $controllerResponse->setController ($controller);
-        $controllerResponse->setArgs ($args);
+        $controllerResponse->setName($name);
+        $controllerResponse->setAction($action);
+        $controllerResponse->setController($controller);
+        $controllerResponse->setArgs($args);
 
         return $controllerResponse;
     }
@@ -68,13 +68,15 @@ trait ControllerTrait
      *
      * @return IControllerResponse
      */
-    public function view ($template = null, $data = null)
+    public function view($template = null, $data = null)
     {
 
         $controllerResponse = new ControllerViewResponse();
-        $controllerResponse->setTemplatePath ($template);
-        $controllerResponse->setData ($data
-            ? : $this->bag);
+        $controllerResponse->setTemplatePath($template);
+        $controllerResponse->setData(
+            $data
+                ? : $this->bag
+        );
 
         return $controllerResponse;
     }

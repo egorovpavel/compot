@@ -13,7 +13,7 @@ class UnresolvableNotHintedDependencyClass
 {
     public $dep;
 
-    public function __construct ($var)
+    public function __construct($var)
     {
         $this->dep = $var;
     }

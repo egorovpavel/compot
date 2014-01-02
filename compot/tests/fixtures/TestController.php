@@ -16,11 +16,11 @@ class TestController
 {
     use ControllerTrait;
 
-    public function getIndexAction (Request $request, TestModelHintedClass $model, $id = null)
+    public function getIndexAction(Request $request, TestModelHintedClass $model, $id = null)
     {
         $this->bag = ['test'];
 
-        return $this->view ();
+        return $this->view();
     }
 
 }

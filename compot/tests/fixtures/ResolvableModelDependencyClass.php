@@ -16,7 +16,7 @@ class ResolvableModelDependencyClass
     public $request;
     public $model;
 
-    public function __construct (Request $request, TestModelClass $model)
+    public function __construct(Request $request, TestModelClass $model)
     {
         $this->request = $request;
         $this->model   = $model;
