@@ -51,9 +51,10 @@ class ControllerViewResponse implements IControllerResponse{
     public function getResponse(CompotContext $context)
     {
         $viewEngine = $context->getContainer()->create("compot\\IViewEngine");
-        if($this->getTemplatePath()){
+        if ($this->getTemplatePath()) {
             return new Response($viewEngine->render($this->getTemplatePath(),$this->getData()));
         }
+
         return new Response($viewEngine->render($context->getRoute()->getTarget() . "/" . $context->getRoute()->getAction(),$this->getData()));
     }
 }

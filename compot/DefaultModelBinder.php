@@ -31,6 +31,7 @@ class DefaultModelBinder implements IModelBinder
                 $this->setValue($prefix, $reflected, $property, $object);
             }
         }
+
         return $object;
     }
 
@@ -44,6 +45,7 @@ class DefaultModelBinder implements IModelBinder
         if ($property->isPublic()) {
             return true;
         }
+
         return $this->hasSetter($property, $class);
     }
 

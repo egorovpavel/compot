@@ -32,9 +32,10 @@ trait ControllerTrait {
         $builder->enableAnnotationMapping();
         $validator = $builder->getValidator();
         $this->bag['_errors'] = $validator->validate($model, $groups);
-        if(count($this->bag['_errors']) > 0){
+        if (count($this->bag['_errors']) > 0) {
             return false;
         }
+
         return true;
     }
 
@@ -52,6 +53,7 @@ trait ControllerTrait {
         $controllerResponse->setAction($action);
         $controllerResponse->setController($controller);
         $controllerResponse->setArgs($args);
+
         return $controllerResponse;
     }
 

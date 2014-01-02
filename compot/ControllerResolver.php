@@ -76,11 +76,11 @@ class ControllerResolver implements ControllerResolverInterface, EventSubscriber
 
         $context = new CompotContext($this->container, $this->matchedRoute, $this->router);
 
-        if($viewEngine && $event->getControllerResult() instanceof IControllerResponse){
+        if ($viewEngine && $event->getControllerResult() instanceof IControllerResponse) {
             $controllerResponse = $event->getControllerResult();
             $response = $controllerResponse->getResponse($context);
             $event->setResponse($response);
-        }else if($viewEngine && is_string($event->getControllerResult())){
+        } elseif ($viewEngine && is_string($event->getControllerResult())) {
             $event->setResponse(new Response($event->getControllerResult()));
         }
 

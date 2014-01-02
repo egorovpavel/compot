@@ -39,6 +39,7 @@ class DependencyBinder
     public static function to($target)
     {
         $inst = new DependencyBinder($target);
+
         return $inst;
     }
 
@@ -48,6 +49,7 @@ class DependencyBinder
     public function asSingleton()
     {
         $this->singleton = true;
+
         return $this;
     }
 

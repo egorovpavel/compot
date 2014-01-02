@@ -39,6 +39,7 @@ class DIContainer
     {
         $bind = DependencyBinder::to($obj);
         $this->bindings[get_class($obj)] = $bind;
+
         return $bind;
     }
 
@@ -69,6 +70,7 @@ class DIContainer
         if (!$bind) {
             return $this->create($class->getName());
         }
+
         return is_object($bind->getTarget())
             ? $bind->getTarget()
             : $this->create($bind->getTarget());
@@ -84,6 +86,7 @@ class DIContainer
         if (isset($this->bindings[$class->getName()])) {
             return $this->getBound($class, $args);
         }
+
         return $class->newInstanceArgs($args);
     }
 
@@ -122,6 +125,7 @@ class DIContainer
     {
         $reflector = new \ReflectionClass($obj);
         $method = $reflector->getMethod($method);
+
         return $method->invoke($obj, $this->resolveDependencies($method));
     }
 
@@ -138,9 +142,9 @@ class DIContainer
         foreach ($params as &$parameter) {
             if (($reflector = $parameter->getClass())) {
                 $dependencies[] = $this->getBound($reflector) ? : $this->create($reflector->getName());
-            }elseif($this->modelBinder){
+            } elseif ($this->modelBinder) {
                 $dependencies[] = $this->modelBinder->getValueProvider()->getValue([],$parameter->getName());
-            }else {
+            } else {
                 throw new UnResolvableDependency();
             }
         }
@@ -151,6 +155,7 @@ class DIContainer
     public function resolveDependenciesFor($obj, $methodName){
         $reflector = new \ReflectionClass($obj);
         $method = $reflector->getMethod($methodName);
+
         return $this->resolveDependencies($method);
     }
 }
