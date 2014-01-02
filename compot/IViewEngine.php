@@ -9,6 +9,7 @@
 
 namespace compot;
 
-interface IViewEngine {
-    public function render($template, $data);
+interface IViewEngine
+{
+    public function render ($template, $data);
 }

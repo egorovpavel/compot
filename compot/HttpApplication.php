@@ -43,60 +43,63 @@ class HttpApplication
      */
     protected $viewEngine;
 
-    public function __construct()
+    public function __construct ()
     {
         $this->container = new DIContainer();
-        $this->router = new Router();
-        $this->resolver = new ControllerResolver($this->container, $this->router);
+        $this->router    = new Router();
+        $this->resolver  = new ControllerResolver( $this->container, $this->router );
     }
 
-    public function setViewEngine($class)
+    public function setViewEngine ($class)
     {
-        $this->container->bindTo('compot\\IViewEngine', DependencyBinder::to($class));
+        $this->container->bindTo ('compot\\IViewEngine', DependencyBinder::to ($class));
     }
 
-    public function setControllerPath($path)
+    public function setControllerPath ($path)
     {
-        $this->resolver->setControllerPath($path);
+        $this->resolver->setControllerPath ($path);
     }
 
-    public function mapRoute($name, $rule, array $defaults = null, $acceptNull = false)
+    public function mapRoute ($name, $rule, array $defaults = null, $acceptNull = false)
     {
-        $this->router->mapRoute($name, $rule, $defaults, $acceptNull);
+        $this->router->mapRoute ($name, $rule, $defaults, $acceptNull);
     }
 
     /**
-     * @param  Request  $request
+     * @param  Request $request
+     *
      * @return Response
      */
-    public function run(Request $request = null)
+    public function run (Request $request = null)
     {
         $this->dispatcher = new EventDispatcher();
-        $this->dispatcher->addSubscriber($this->resolver);
-        $this->kernel = new HttpKernel($this->dispatcher, $this->resolver);
-        $this->container->bind($request ? : Request::createFromGlobals());
-        $this->container->bind(Response::create());
-        $this->container->bindTo("compot\\IValueProvider", DependencyBinder::to("compot\\DefaultValueProvider"));
-        $this->container->setModelBinder($this->container->create("compot\\DefaultModelBinder"));
-        $request = $this->container->create("Symfony\\Component\\HttpFoundation\\Request");
+        $this->dispatcher->addSubscriber ($this->resolver);
+        $this->kernel = new HttpKernel( $this->dispatcher, $this->resolver );
+        $this->container->bind ($request
+            ? : Request::createFromGlobals ());
+        $this->container->bind (Response::create ());
+        $this->container->bindTo ("compot\\IValueProvider", DependencyBinder::to ("compot\\DefaultValueProvider"));
+        $this->container->setModelBinder ($this->container->create ("compot\\DefaultModelBinder"));
+        $request = $this->container->create ("Symfony\\Component\\HttpFoundation\\Request");
 
-        $result = $this->kernel->handle($request);
-        $result->send();
+        $result = $this->kernel->handle ($request);
+        $result->send ();
 
         return $result;
     }
 
-    public function bind($obj)
+    public function bind ($obj)
     {
-        $this->container->bind($obj);
+        $this->container->bind ($obj);
     }
 
-    public function getInstanceOf($class){
-        return $this->container->create($class);
+    public function getInstanceOf ($class)
+    {
+        return $this->container->create ($class);
     }
 
-    public function getRoute($name)
+    public function getRoute ($name)
     {
-        return $this->router->getRoute($name);
+        return $this->router->getRoute ($name);
     }
 }

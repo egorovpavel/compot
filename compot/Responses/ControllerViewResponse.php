@@ -13,13 +13,15 @@ use compot\CompotContext;
 use compot\IControllerResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class ControllerViewResponse implements IControllerResponse{
+class ControllerViewResponse implements IControllerResponse
+{
     protected $templatePath;
     protected $data;
+
     /**
      * @param mixed $data
      */
-    public function setData($data)
+    public function setData ($data)
     {
         $this->data = $data;
     }
@@ -27,7 +29,7 @@ class ControllerViewResponse implements IControllerResponse{
     /**
      * @return mixed
      */
-    public function getData()
+    public function getData ()
     {
         return $this->data;
     }
@@ -35,7 +37,7 @@ class ControllerViewResponse implements IControllerResponse{
     /**
      * @param mixed $templatePath
      */
-    public function setTemplatePath($templatePath)
+    public function setTemplatePath ($templatePath)
     {
         $this->templatePath = $templatePath;
     }
@@ -43,18 +45,18 @@ class ControllerViewResponse implements IControllerResponse{
     /**
      * @return mixed
      */
-    public function getTemplatePath()
+    public function getTemplatePath ()
     {
         return $this->templatePath;
     }
 
-    public function getResponse(CompotContext $context)
+    public function getResponse (CompotContext $context)
     {
-        $viewEngine = $context->getContainer()->create("compot\\IViewEngine");
-        if ($this->getTemplatePath()) {
-            return new Response($viewEngine->render($this->getTemplatePath(),$this->getData()));
+        $viewEngine = $context->getContainer ()->create ("compot\\IViewEngine");
+        if ( $this->getTemplatePath () ) {
+            return new Response( $viewEngine->render ($this->getTemplatePath (), $this->getData ()) );
         }
 
-        return new Response($viewEngine->render($context->getRoute()->getTarget() . "/" . $context->getRoute()->getAction(),$this->getData()));
+        return new Response( $viewEngine->render ($context->getRoute ()->getTarget () . "/" . $context->getRoute ()->getAction (), $this->getData ()) );
     }
 }

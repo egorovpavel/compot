@@ -12,13 +12,15 @@ namespace compot\tests\fixtures;
 use compot\ControllerTrait;
 use Symfony\Component\HttpFoundation\Request;
 
-class TestController {
+class TestController
+{
     use ControllerTrait;
 
-    public function getIndexAction(Request $request, TestModelHintedClass $model, $id = null){
-        $this->bag = ['test'];
+    public function getIndexAction (Request $request, TestModelHintedClass $model, $id = null)
+    {
+        $this->bag = [ 'test' ];
 
-        return $this->view();
+        return $this->view ();
     }
 
 }

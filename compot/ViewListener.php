@@ -14,24 +14,28 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class ViewListener implements  EventSubscriberInterface{
+class ViewListener implements EventSubscriberInterface
+{
     /**
      * @var IViewEngine
      */
     protected $viewEngine;
 
-    public function __construct(IViewEngine $viewEngine = null){
+    public function __construct (IViewEngine $viewEngine = null)
+    {
         $this->viewEngine = $viewEngine;
     }
 
-    public function onKernelView(GetResponseForControllerResultEvent $event){
-        if ($this->viewEngine && $event->getControllerResult() instanceof ControllerResponse) {
-            $res = $this->viewEngine->render($event->getControllerResult()->getTemplatePath(), $event->getControllerResult()->getData());
-            $event->setResponse(new Response($res));
+    public function onKernelView (GetResponseForControllerResultEvent $event)
+    {
+        if ( $this->viewEngine && $event->getControllerResult () instanceof ControllerResponse ) {
+            $res = $this->viewEngine->render ($event->getControllerResult ()->getTemplatePath (), $event->getControllerResult ()->getData ());
+            $event->setResponse (new Response( $res ));
         } else {
-            $event->setResponse(new Response("hui2"));
+            $event->setResponse (new Response( "hui2" ));
         }
     }
+
     /**
      * Returns an array of event names this subscriber wants to listen to.
      *
@@ -52,10 +56,8 @@ class ViewListener implements  EventSubscriberInterface{
      *
      * @api
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents ()
     {
-        return array(
-            KernelEvents::VIEW => 'onKernelView',
-        );
+        return array ( KernelEvents::VIEW => 'onKernelView', );
     }
 }
