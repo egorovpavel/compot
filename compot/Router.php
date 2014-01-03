@@ -21,7 +21,7 @@ class Router
     }
 
     /**
-     * @param  string $uri
+     * @param string $uri
      *
      * @return Route|null
      */

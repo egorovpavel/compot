@@ -83,8 +83,8 @@ class DIContainer
     }
 
     /**
-     * @param  \ReflectionClass $class
-     * @param  array            $args
+     * @param \ReflectionClass $class
+     * @param array            $args
      *
      * @return object
      */
@@ -125,8 +125,8 @@ class DIContainer
     }
 
     /**
-     * @param  object $obj
-     * @param  string $method
+     * @param object $obj
+     * @param string $method
      *
      * @return mixed
      */
@@ -139,7 +139,7 @@ class DIContainer
     }
 
     /**
-     * @param  \ReflectionMethod $method
+     * @param \ReflectionMethod $method
      *
      * @return array
      * @throws \Exception

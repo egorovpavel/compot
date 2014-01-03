@@ -43,9 +43,9 @@ class DefaultValueProvider implements IValueProvider
     }
 
     /**
-     * @param                   $prefix
-     * @param                   $name
-     * @param  \ReflectionClass $type
+     * @param                  $prefix
+     * @param                  $name
+     * @param \ReflectionClass $type
      *
      * @return mixed|null
      */
@@ -83,7 +83,7 @@ class DefaultValueProvider implements IValueProvider
     }
 
     /**
-     * @param  string $type
+     * @param string $type
      *
      * @return IConverter
      */
