@@ -24,8 +24,8 @@ trait ControllerTrait
     private $validationErrors;
 
     /**
-     * @param        $model
-     * @param  array $groups
+     * @param       $model
+     * @param array $groups
      *
      * @return bool
      */
@@ -43,10 +43,10 @@ trait ControllerTrait
     }
 
     /**
-     * @param        $name
-     * @param  null  $action
-     * @param  null  $controller
-     * @param  array $args
+     * @param       $name
+     * @param null  $action
+     * @param null  $controller
+     * @param array $args
      *
      * @return IControllerResponse
      */
@@ -63,8 +63,8 @@ trait ControllerTrait
     }
 
     /**
-     * @param  null $template
-     * @param  null $data
+     * @param null $template
+     * @param null $data
      *
      * @return IControllerResponse
      */
