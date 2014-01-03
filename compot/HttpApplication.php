@@ -66,7 +66,7 @@ class HttpApplication
     }
 
     /**
-     * @param  Request $request
+     * @param Request $request
      *
      * @return Response
      */
