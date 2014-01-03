@@ -90,9 +90,19 @@ class HttpApplication
         return $result;
     }
 
+    /**
+     * @param $obj
+     *
+     * @return DependencyBinder
+     */
     public function bind($obj)
     {
-        $this->container->bind($obj);
+        return $this->container->bind($obj);
+    }
+
+    public function bindTo($interface, $class)
+    {
+        return $this->container->bindTo($interface, DependencyBinder::to($class));
     }
 
     public function getInstanceOf($class)

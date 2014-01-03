@@ -17,6 +17,11 @@ use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
+/**
+ * Class ControllerResolver
+ *
+ * @package compot
+ */
 class ControllerResolver implements ControllerResolverInterface, EventSubscriberInterface
 {
     /**
@@ -31,7 +36,13 @@ class ControllerResolver implements ControllerResolverInterface, EventSubscriber
      * @var Route
      */
     protected $matchedRoute;
+    /**
+     * @var
+     */
     protected $dependencies;
+    /**
+     * @var
+     */
     protected $path;
 
     /**
@@ -69,6 +80,9 @@ class ControllerResolver implements ControllerResolverInterface, EventSubscriber
         return array (KernelEvents::VIEW => 'onKernelView',);
     }
 
+    /**
+     * @param GetResponseForControllerResultEvent $event
+     */
     public function onKernelView(GetResponseForControllerResultEvent $event)
     {
         $viewEngine = $this->container->create("compot\\IViewEngine");
@@ -85,6 +99,9 @@ class ControllerResolver implements ControllerResolverInterface, EventSubscriber
 
     }
 
+    /**
+     * @param $path
+     */
     public function setControllerPath($path)
     {
         $this->path = $path;

@@ -15,10 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 interface IControllerResponse
 {
     /**
-     * @param $controller
-     * @param $action
+     * @param CompotContext $context
      *
-     * @return Response
+     * @return mixed
      */
     public function getResponse(CompotContext $context);
 }

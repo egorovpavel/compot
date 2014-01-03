@@ -29,14 +29,14 @@ class DIContainer
     protected $singletons = [];
 
     /**
-     * @var Binder[]
+     * @var DependencyBinder[]
      */
     protected $bindings = [];
 
     /**
      * @param $obj
      *
-     * @return Binder
+     * @return DependencyBinder
      */
     public function bind($obj)
     {

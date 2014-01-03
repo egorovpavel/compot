@@ -14,6 +14,6 @@ class DummyViewEngine implements IViewEngine
 
     public function render($template, $data)
     {
-        return "dummy";
+        return print_r($data, true);
     }
 }

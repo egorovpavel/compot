@@ -85,7 +85,7 @@ class DefaultValueProvider implements IValueProvider
     /**
      * @param  string $type
      *
-     * @return \compot\IConverter
+     * @return IConverter
      */
     public function getConverterFor($type)
     {

@@ -55,5 +55,4 @@ class CompotContext
     {
         return $this->router;
     }
-
 }
