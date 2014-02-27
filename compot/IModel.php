@@ -8,7 +8,13 @@
  */
 
 namespace compot;
-
+use Doctrine\ORM\Mapping as ORM;
+/**
+ * Class IModel
+ * @ORM\MappedSuperclass
+ *
+ * @package compot
+ */
 interface IModel
 {
 

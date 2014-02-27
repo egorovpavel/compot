@@ -71,7 +71,7 @@ class Route
             return preg_replace_callback('/{([^}]*)}/', $convertToRegexp, $rule);
         };
 
-        return "/^\/" . str_replace("/", "\\/", $convertToRegexp($rule)) . "$/";
+        return "/^" . str_replace("/", "\\/", $convertToRegexp($rule)) . "$/";
     }
 
     /**
@@ -193,13 +193,7 @@ class Route
      */
     public function match($uri)
     {
-        if (empty($uri) && isset($this->defaults['controller']) && isset($this->defaults['action'])) {
-            $this->target    = $this->defaults['controller'];
-            $this->action    = $this->defaults['action'];
-            $this->arguments = $this->filterArgs($this->defaults);
 
-            return $this;
-        }
         if (!empty($uri) && preg_match($this->rule, $uri, $matches)) {
             $controller = isset($matches['controller']) && $matches['controller']
                 ? $matches['controller']

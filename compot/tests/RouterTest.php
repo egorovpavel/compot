@@ -20,22 +20,22 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     {
         // no optional
         $this->assertEquals(
-            "/^\\/(?P<controller>[^\/]+)\/(?P<action>[^\/]+)\/(?P<id>[^\/]+)$/",
+            "/^(?P<controller>[^\/]+)\/(?P<action>[^\/]+)\/(?P<id>[^\/]+)$/",
             Route::prepareRule("{controller}/{action}/{id}", null)
         );
         // optional id
         $this->assertEquals(
-            "/^\\/(?P<controller>[^\/]+)\/(?P<action>[^\/]+)\/?(?P<id>[^\/]*)?$/",
+            "/^(?P<controller>[^\/]+)\/(?P<action>[^\/]+)\/?(?P<id>[^\/]*)?$/",
             Route::prepareRule("{controller}/{action}/{id}", ['id' => "id"])
         );
         // optional action
         $this->assertEquals(
-            "/^\\/(?P<controller>[^\/]+)\/?(?P<action>[^\/]*)?\/?(?P<id>[^\/]*)?$/",
+            "/^(?P<controller>[^\/]+)\/?(?P<action>[^\/]*)?\/?(?P<id>[^\/]*)?$/",
             Route::prepareRule("{controller}/{action}/{id}", ['id' => "id", 'action' => 'action'])
         );
         // optional controller
         $this->assertEquals(
-            "/^\\/?(?P<controller>[^\/]*)?\/?(?P<action>[^\/]*)?\/?(?P<id>[^\/]*)?$/",
+            "/^?(?P<controller>[^\/]*)?\/?(?P<action>[^\/]*)?\/?(?P<id>[^\/]*)?$/",
             Route::prepareRule(
                 "{controller}/{action}/{id}",
                 ['id' => "id", 'action' => 'action', 'controller' => 'controller']
@@ -57,7 +57,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($router->match("/SomeController3/test"));
         $this->assertNull($router->match("/SomeController4/"));
         $this->assertNull($router->match("/SomeController5"));
-        $this->assertNull($router->match(""));
+        $this->assertNull($router->match("/"));
     }
 
     public function testMatchesRouteRulesWithDefaultArguments()
@@ -117,7 +117,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 
     public function testMatchesRouteRulesWithDefaultController()
     {
-        $router = new Router(new DIContainer());
+        $router = new Router();
         $router->mapRoute(
             "test",
             "fixedPrefix/{action}/{id}/{subid}/{someid}",
@@ -136,7 +136,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("test_subid", $actual->getArguments()['subid']);
         $this->assertEquals("default_someid", $actual->getArguments()['someid']);
 
-        $router = new Router(new DIContainer());
+        $router = new Router();
         $router->mapRoute(
             "test",
             "{controller}/{action}/{id}/{subid}/{someid}",
@@ -158,4 +158,28 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testMultipleRouteMapped()
+    {
+        $router = new Router();
+
+        $router->mapRoute('products', '/products/{action}', [
+            'controller' => 'Product',
+            'action' => 'Index'
+        ]);
+        $router->mapRoute('default', '/{action}', [
+            'controller' => 'Home',
+            'action' => 'Index'
+        ]);
+
+
+        $actual = $router->match("/");
+        $this->assertNotNull($actual);
+        $this->assertEquals("Home", $actual->getTarget());
+        $this->assertEquals("Index", $actual->getAction());
+
+        $actual = $router->match("/products");
+        $this->assertNotNull($actual);
+        $this->assertEquals("Product", $actual->getTarget());
+        $this->assertEquals("Index", $actual->getAction());
+    }
 }

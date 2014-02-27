@@ -27,8 +27,11 @@ class Router
      */
     public function match($uri)
     {
+        $uri = trim($uri,"/");
         foreach ($this->routes as &$route) {
-            return $route->match($uri);
+            if ($route->match($uri)) {
+                return $route;
+            }
         }
 
         return null;
