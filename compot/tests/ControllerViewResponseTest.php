@@ -9,7 +9,6 @@
 
 namespace tests;
 
-
 use compot\HttpApplication;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -171,7 +171,6 @@ class RouterTest extends \PHPUnit_Framework_TestCase
             'action' => 'Index'
         ]);
 
-
         $actual = $router->match("/");
         $this->assertNotNull($actual);
         $this->assertEquals("Home", $actual->getTarget());
